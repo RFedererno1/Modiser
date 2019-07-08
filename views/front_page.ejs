@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- CSSs -->
+    <link rel="stylesheet" href="/static/css/front_pageCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+    <title>Modiser LLC</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <header class="masthead">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-12 text-center">
+                        <h1 class="font-weight-bold text-uppercase">M o d i s e r</h1>
+                        <p class="lead">Modern Distribution Services</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- BackToTop Button -->
+        <a id="button"></a>
+
+        <!-- About Us-->
+        <section class="jumbotron jumbotron-fluid" id="about_us">
+            <div class="container">
+                <h3 class="font-weight-bold heading"> <a href="/about-us" class="nav-link">About Us</a></h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- Products -->
+        <section class="jumbotron jumbotron-fluid" style="background-color: #F5F5F5;" id="products">
+            <div class="container">
+                <h3 class="font-weight-bold heading"> <a href="/products" class="nav-link">Products</a></h3>
+                <div class="row" id="product_short">
+                    <div class="col-md-3" id="prod_image">
+                        <img class="prod_avt" src="/static/Tamarine_Paste_900x900.jpg">
+                    </div>
+                    <div class="col-md-8" id="prod_description">
+                        <h5 style="line-height: 1rem; margin-bottom: 5%;">Product Name</h5>
+                        <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.
+                        </p>
+                    </div>
+                </div>
+
+                <hr style="width: 25%; margin-block: 5%">
+
+                <div class="row" id="product_short">
+                    <div class="col-md-3" id="prod_image">
+                        <img class="prod_avt" src="/static/Tamarine_Paste_900x900.jpg">
+                    </div>
+                    <div class="col-md-8" id="prod_description">
+                        <h5 style="line-height: 1rem; margin-bottom: 5%;">Product Name</h5>
+                        <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.
+                        </p>
+                    </div>
+                </div>
+
+                <hr style="width: 25%; margin-block: 5%">
+
+                <div class="row" id="product_short">
+                    <div class="col-md-3" id="prod_image">
+                        <img class="prod_avt" src="/static/Tamarine_Paste_900x900.jpg">
+                    </div>
+                    <div class="col-md-8" id="prod_description">
+                        <h5 style="line-height: 1rem; margin-bottom: 5%;">Product Name</h5>
+                        <p style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.
+                        </p>
+                    </div>
+                </div>
+        </section>
+
+        <!-- News -->
+        <section class="jumbotron jumbotron-fluid" id="news">
+            <div class="container">
+                <h3 class="font-weight-bold heading "> <a href="/news " class="nav-link ">News</a></h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="news_avt" src="/static/Tamarine_Paste_900x900.jpg">
+                        <h5 class="my-3" style="text-align: justify;" id="news_title">
+                            <a href="#">
+                            News Title
+                        </a>
+                        </h5>
+                        <p class="my-3" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="news_avt" src="/static/Tamarine_Paste_900x900.jpg">
+                        <h5 class="my-3" style="text-align: justify;" id="news_title">
+                            <a href="#">
+                            News Title
+                        </a>
+                        </h5>
+                        <p class="my-3" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="news_avt" src="/static/Tamarine_Paste_900x900.jpg">
+                        <h5 class="my-3" style="text-align: justify;" id="news_title">
+                            <a href="#">
+                            News Title
+                        </a>
+                        </h5>
+                        <p class="my-3" style="text-align: justify;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Partners -->
+        <section class="jumbotron jumbotron-fluid " style="background-color: #F5F5F5; ">
+            <div class="container ">
+                <h3 class="font-weight-bold heading "> <a href="/our-partners" class="nav-link ">Partners</a></h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
+                <hr>
+                <div id="markets">
+                    <div class="list-group py-4">
+                        <span class="fa fa-2x fa-shopping-cart" aria-hidden="true"> 
+                        <span class="px-2" style="font-family: 'Josefin Sans', sans-serif; font-weight: 600;">
+                            Markets
+                        </span>
+                        </span>
+                    </div>
+                    <div id="markets_imgs" style="text-align: center;">
+                        <img src="/static/Circle-K.png" class="px-2">
+                        <img src="/static/Circle-K.png" class="px-2">
+                        <img src="/static/Circle-K.png" class="px-2">
+                        <img src="/static/Circle-K.png" class="px-2">
+                    </div>
+                </div>
+                <hr style="margin-top: 2em;">
+                <div id="brands">
+                    <div class="list-group py-4 px-1" id="brand_section">
+                        <span class="fa fa-2x fa-truck" aria-hidden="true">
+                            <span class="px-2" style="font-family: 'Josefin Sans', sans-serif; font-weight: 600;"> 
+                                Brands
+                            </span>
+                        </span>
+                    </div>
+                    <div id="brands_imgs" style="text-align: center;">
+                        <img src="/static/Circle-K.png" class="px-2">
+                        <img src="/static/Circle-K.png" class="px-2">
+                        <img src="/static/Circle-K.png" class="px-2">
+                        <img src="/static/Circle-K.png" class="px-2">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <%- include('footer') %>
+            <!-- Bootstrap JS -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1 " crossorigin="anonymous "></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous "></script>
+            <script src="/static/js/back_to_topJS.js"></script>
+            <script src="/static/js/navbarJS.js"></script>
+</body>
+
+</html>

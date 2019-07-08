@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- CSSs -->
+    <link rel="stylesheet" href="/static/css/about_usCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+
+    <title>About Us</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <a id="button"></a>
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <hr>
+                <p style="font-weight: 500; font-size: 1.25em;">
+                    <a href="/" style="color: black;">Modiser</a> >
+                    <a href="/about-us" style="color: black;">About Us</a>
+                </p>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-2 myCols">
+                        <div class="list-group" style="position: fixed;" id="scrollspy">
+                            <a class="list-group-item" href="#Introduction" style="color: black;">Introduction</a>
+                            <a class="list-group-item" href="#Founder" style="color: black;" class="center">Founder</a>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 myCols">
+                        <section id="Introduction">
+                            <h3 class='font-weight-bold heading my-4'>Introduction</h3>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita. Lorem ipsum dolor sit
+                                amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita. Lorem ipsum
+                                dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit
+                                expedita. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit
+                                expedita. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit
+                                expedita.
+                            </p>
+                            <figure>
+                                <img src="/static/dracaena-cinnabari.jpg" alt="Introduction" class="center">
+                                <figcaption style="text-align: center;">consectetur adipisicing elit.</figcaption>
+                            </figure>
+                        </section>
+                        <hr class="my-4">
+                        <section id="Founder">
+                            <h3 class='font-weight-bold heading my-4'>Founder</h3>
+                            <div class="row">
+                                <div class="col-sm-3 myCols">
+                                    <img src="/static/roger.jpeg" alt="Founder">
+                                </div>
+                                <div class="col-sm-1 myCols"></div>
+                                <div class="col-sm-8 myCols">
+                                    <h5 style="font-size: 27px;">
+                                        <b>Roger Federer</b>
+                                    </h5>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem n<br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem n<br> Lorem ipsum dolor
+                                        sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem n<br> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem n
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <%- include('footer') %>
+            <!-- Bootstrap JS -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="/static/js/about_usJS.js"></script>
+            <script src="/static/js/back_to_topJS.js"></script>
+</body>
+
+</html>

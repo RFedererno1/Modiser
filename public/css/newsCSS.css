@@ -1,0 +1,30 @@
+body {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.jumbotron-fluid {
+    margin-bottom: 0;
+}
+
+.news_image {
+    width: 20%;
+}
+
+.news_link {
+    text-decoration: none;
+    color: black;
+}
+
+.news_link:hover {
+    text-decoration: none;
+    color: cornflowerblue;
+}
+
+
+/* Duplicate Elements */
+
+p>a,
+p>a:hover {
+    color: black;
+    text-decoration: none;
+}

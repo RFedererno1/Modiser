@@ -1,0 +1,24 @@
+body {
+    font-family: "Josefin sans", sans-serif;
+}
+
+p>a,
+p>a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+img {
+    padding: 0.5em;
+    width: 200px;
+    height: 200px;
+}
+
+.row {
+    text-align: center;
+}
+
+.centered {
+    display: block;
+    margin: auto;
+}

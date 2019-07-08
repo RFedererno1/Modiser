@@ -11,10 +11,14 @@ $(document).ready(function(){
             }, 100);
         }
     });
-
     $(document).on('keyup', function(event) {
         if (event.which == 27 && $('#search-bar').hasClass('open')) {
             $('#search-button').trigger('click');
         }
     });
+    $(function() {
+        $(document).click(function (event) {
+          $('.navbar-collapse').collapse('hide');
+        });
+      });
 });

@@ -17,7 +17,7 @@ $(document).ready(function(){
         }
     });
     $(function() {
-        $(document).click(function (event) {
+        $('.jumbotron').click(function (event) {
           $('.navbar-collapse').collapse('hide');
         });
       });

@@ -1,6 +1,5 @@
 body {
     font-family: "Josefin Sans", sans-serif;
-    margin: 0;
 }
 
 .jumbotron-fluid {
@@ -8,18 +7,11 @@ body {
 }
 
 section {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: 0px !important;
 }
 
-h3 {
-    display: flex;
-    flex: 1;
-    width: 50%;
-    margin: 20px auto;
-    line-height: 1em;
-    font-size: 36px;
+hr {
+    margin: auto;
 }
 
 .list-group {
@@ -41,7 +33,7 @@ h3 {
 .heading-ie span.before {
     content: '';
     flex-grow: 1;
-    margin: 0px 4px;
+    margin: 0px 17px;
     background: linear-gradient(to right, black, black);
     background-size: 100% 1px;
     background-position: 0% 50%;
@@ -61,6 +53,23 @@ p>a:hover {
 
 @media(max-width: 767px) {
     #scrollspy {
-        display: none;
+        display: none !important;
+    }
+    h3{
+        display: flex;
+        flex: 1;
+        margin: 20px auto;
+        line-height: 1.5em;
+        font-size: 30px;
+    }
+}
+@media (min-width: 768px) {
+    h3 {
+        display: flex;
+        flex: 1;
+        width: 62%;
+        margin: 20px auto;
+        line-height: 1.5em;
+        font-size: 36px;
     }
 }

@@ -14,11 +14,22 @@ img {
     height: 200px;
 }
 
-.row {
-    text-align: center;
-}
+
 
 .centered {
     display: block;
     margin: auto;
+}
+.list-group {
+    margin-left: -4%;
+    width: 15%;
+    z-index: 1;
+}
+
+.list-group>a:hover {
+    text-decoration: none;
+}
+
+.list-group>a:focus {
+    outline: 0 !important;
 }

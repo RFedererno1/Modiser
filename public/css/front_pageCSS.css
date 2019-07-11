@@ -23,6 +23,20 @@ hr {
     color: black;
 }
 
+.list-group {
+    margin-left: -4%;
+    width: 15%;
+    z-index: 1;
+}
+
+.list-group>a:hover {
+    text-decoration: none;
+}
+
+.list-group>a:focus {
+    outline: 0 !important;
+}
+
 .heading:before,
 .heading:after,
 .heading-ie span.after,
@@ -72,7 +86,19 @@ h5>a:hover,
 h5>a:focus {
     text-decoration: none;
 }
-
+@media (max-width: 767px) {
+    h3,
+    h4 {
+        display: flex;
+        flex: 1;
+        margin: 20px auto;
+        line-height: 1.5em;
+        font-size: 30px;
+    }
+    #scrollspy {
+        display: none;
+    }
+}
 @media (min-width: 768px) {
     h3 {
         display: flex;
@@ -90,13 +116,3 @@ h5>a:focus {
     }
 }
 
-@media (max-width: 767px) {
-    h3,
-    h4 {
-        display: flex;
-        flex: 1;
-        margin: 20px auto;
-        line-height: 1.5em;
-        font-size: 30px;
-    }
-}

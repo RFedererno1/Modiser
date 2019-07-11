@@ -11,6 +11,8 @@
   "dependencies": {
     "ejs": "^2.6.2",
     "express": "^4.17.1",
+    "mongoose": "^5.6.4",
+    "mongoose-auto-increment": "^5.0.1",
     "nodemon": "^1.19.1"
   }
 }

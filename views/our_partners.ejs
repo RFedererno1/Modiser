@@ -25,7 +25,15 @@
     <%- include('navbar') %>
         <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0;">
             <div class="container">
-                <hr>
+                <div class="row">
+                        <div class="col-sm-2 myCols">
+                                <div class="list-group" style="position: fixed;" id="scrollspy">
+                                    <a class="list-group-item" href="#markets" style="color: black;">Markets</a>
+                                    <a class="list-group-item" href="#brands" style="color: black;" class="center">Brands</a>
+                                </div>
+                        </div>
+                        <div class="col-sm-10 myCols">
+                                <hr>
                 <p style="font-weight: 500; font-size: 1.25em;">
                     <a href="#">Modiser</a> >
                     <a href="#">Our Partners</a>
@@ -35,7 +43,7 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
                 <br>
                 <div id="markets">
-                    <div class="list-group py-4">
+                    <div class="row py-4">
                         <span class="fa fa-2x fa-shopping-cart" aria-hidden="true">
                         <span class="px-2" style="font-family: 'Josefin Sans', sans-serif; font-weight: 600;">
                             Markets
@@ -57,7 +65,7 @@
                 </div>
                 <hr style="margin-top: 2em;">
                 <div id="brands">
-                    <div class="list-group py-4 px-1" id="brand_section">
+                    <div class="row py-4 px-1" id="brand_section">
                         <span class="fa fa-2x fa-truck" aria-hidden="true">
                         <span class="px-2" style="font-family: 'Josefin Sans', sans-serif; font-weight: 600;">
                             Brands
@@ -88,6 +96,9 @@
                 </div>
             </div>
         </div>
+                        </div>
+                </div>
+                
         <%- include('footer') %>
             <!-- Bootstrap JS -->
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -95,6 +106,7 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
             <script src="/static/js/back_to_topJS.js"></script>
             <script src="/static/js/navbarJS.js"></script>
+            <script src="/static/js/partnerJS.js"></script>
 </body>
 
 </html>

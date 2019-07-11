@@ -29,10 +29,14 @@
     $(window).scroll(function(e) {
         if($(window).width()>767){
             if($(document).scrollTop() > 500){
-                $('#scrollspy').show();
+                $('#scrollspy').show("slow", function() {
+                    
+                  });
             }
             else{
-                $('#scrollspy').hide();
+                $('#scrollspy').hide("slow", function() {
+                    // Animation complete.
+                  });
             }
         }
         

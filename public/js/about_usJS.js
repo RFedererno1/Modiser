@@ -10,6 +10,7 @@
     $navbara.click(function(e) {
         //prevent the page from refreshing
         e.preventDefault();
+        history.replaceState(null, null, ' ');
         //set the top offset animation and speed
         $('html, body').animate({
             scrollTop: $($(this).attr('href')).offset().top - 150
@@ -44,10 +45,10 @@
     })
 })(jQuery);
 
-hash = function(h) {
-    if (history.pushState) {
-        history.pushState(null, null, h);
-    } else {
-        location.hash = h;
-    }
-}
+// hash = function(h) {
+//     if (history.pushState) {
+//         history.pushState(null, null, h);
+//     } else {
+//         location.hash = h;
+//     }
+// }

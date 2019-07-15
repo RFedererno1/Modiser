@@ -1,7 +1,7 @@
 #myFooter {
-    background-color: #333;
+    background-color: #1E3D58;
     margin: 0;
-    color: azure;
+    color: #E8EEF1;
     font-family: "Josefin Sans", sans-serif;
 }
 
@@ -39,14 +39,14 @@
 }
 
 #myFooter a {
-    color: #a9a9a9;
+    color: #E8EEF1;
     text-decoration: none;
 }
 
 #myFooter a:hover,
 #myFooter a:focus {
     text-decoration: none;
-    color: rgb(2, 183, 255);
+    color: #E8EEF1;
 }
 
 #myFooter .myCols {

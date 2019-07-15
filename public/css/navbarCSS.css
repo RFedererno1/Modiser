@@ -1,3 +1,7 @@
+.nav-link {
+    color: #1E3D58 !important;
+}
+
 nav>a>img {
     width: 103px;
     height: 100px;
@@ -12,11 +16,16 @@ nav>a>img {
         font-size: 20px;
     }
     nav>div>ul>li:hover {
-        color: black;
+        color: #E8EEF1;
     }
     #search-button {
         display: none;
     }
+}
+
+#submit-search-button,
+#reset-search-button {
+    color: #1E3D58;
 }
 
 @media (max-width: 767px) {
@@ -26,12 +35,12 @@ nav>a>img {
         font-size: 16px;
     }
     #search-button {
-        color: #777;
+        color: #E8EEF1;
         cursor: pointer;
         padding: 15px;
     }
     #search-button:hover {
-        color: #333;
+        color: #E8EEF1;
     }
     #search-bar {
         background-color: #F8F8F8;

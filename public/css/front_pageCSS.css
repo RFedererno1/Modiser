@@ -4,17 +4,29 @@ body {
 
 .list-group-item,
 .nav-link,
-a {
+a,
+h3 {
     color: #1E3D58 !important;
+}
+
+.readmore {
+    color: #E8EEF1 !important;
 }
 
 .masthead {
     height: 50vh;
-    min-height: 500px;
-    background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+    min-height: 750px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.carousel-inner>.carousel-item>img {
+    display: block;
+    height: 750px;
+    line-height: 1;
+    margin: auto;
+    width: 100%;
 }
 
 section {
@@ -52,41 +64,38 @@ hr {
     background-repeat: repeat-x;
 }
 
-.heading_2:after,
-.heading_2-ie span.after {
+.heading_2:before,
+.heading_2:after {
     content: '';
     flex-grow: 1;
-    margin: 0px 12px;
+    margin: 0px 30px;
     background: linear-gradient(to right, black, black);
     background-size: 100% 1px;
     background-position: 0% 80%;
     background-repeat: repeat-x;
 }
 
-.prod_avt {
-    max-width: 200px;
-    max-height: 200px;
-    margin-top: 3%;
-    margin-bottom: 5%;
-}
-
-.news_avt {
-    width: 100%;
-    height: 150px;
-}
-
 .col-md-4 {
     padding: 25px;
 }
 
+
+/* 
 h5>a,
 a {
     text-decoration: none;
     color: black;
+} */
+
+.btn-readmore {
+    border: none;
+    background-color: #913135;
 }
 
 h5>a:hover,
-h5>a:focus {
+h5>a:focus,
+button>a:focus,
+button>a:hover {
     text-decoration: none;
 }
 
@@ -98,9 +107,6 @@ h5>a:focus {
         margin: 20px auto;
         line-height: 1.5em;
         font-size: 30px;
-    }
-    #scrollspy {
-        display: none;
     }
 }
 

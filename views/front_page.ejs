@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
     <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
     <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/front_page_carouselCSS.css" type="text/css">
     <title>Modiser LLC</title>
 </head>
 
@@ -67,40 +68,42 @@
         <section class="jumbotron jumbotron-fluid " id="partners">
             <div class="container ">
                 <h3 class="font-weight-bold heading "> <a href="/our-partners" class="nav-link ">Partners</a></h3>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus ab nulla dolorum autem nisi officiis blanditiis voluptatem hic, assumenda aspernatur facere ipsam nemo ratione cumque magnam enim fugiat reprehenderit expedita.</p>
-                <hr>
-                <div id="markets">
-                    <div class="row py-4 px-1 mx-2">
-                        <span class="fa fa-2x fa-shopping-cart" aria-hidden="true"> 
-                                        <span style="font-family: 'Josefin Sans', sans-serif; font-weight: 600;">
-                                            Markets
-                                        </span>
-                        </span>
-                    </div>
-                    <div id="markets_imgs" style="text-align: center;">
-                        <img src="/static/Circle-K.png" class="px-2">
-                        <img src="/static/Circle-K.png" class="px-2">
-                        <img src="/static/Circle-K.png" class="px-2">
-                        <img src="/static/Circle-K.png" class="px-2">
-                    </div>
+                
+            </div>
+<div class="top-content">
+    <div class="container-fluid">
+        <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner row w-75 mx-auto" role="listbox">
+                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                    <img src="/static/MarketImage/vinmart.png" class="img-fluid mx-auto d-block" alt="vinmart" >
                 </div>
-                <hr style="margin-top: 2em;">
-                <div id="brands">
-                    <div class="row py-4 px-1 mx-2" id="brand_section">
-                        <span class="fa fa-2x fa-truck" aria-hidden="true">
-                                            <span style="font-family: 'Josefin Sans', sans-serif; font-weight: 600;"> 
-                                                Brands
-                                            </span>
-                        </span>
-                    </div>
-                    <div id="brands_imgs" style="text-align: center;">
-                        <img src="/static/Circle-K.png" class="px-2">
-                        <img src="/static/Circle-K.png" class="px-2">
-                        <img src="/static/Circle-K.png" class="px-2">
-                        <img src="/static/Circle-K.png" class="px-2">
-                    </div>
+                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="/static/MarketImage/lottemart.png" class="img-fluid mx-auto d-block" alt="lottemart" >
                 </div>
+                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="/static/MarketImage/coopmart.jpeg" class="img-fluid mx-auto d-block" alt="coopmart" >
+                </div>
+                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="/static/MarketImage/circlek.png" class="img-fluid mx-auto d-block" alt="circlek" >
+                </div>
+                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="/static/MarketImage/bigc.png" class="img-fluid mx-auto d-block" alt="bigc" >
+                </div>
+                <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                    <img src="/static/MarketImage/aeonmall.png" class="img-fluid mx-auto d-block" alt="aeonmall" > 
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carousel-example" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carousel-example" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
         </section>
         <%- include('footer') %>
             <!-- Bootstrap JS -->
@@ -109,6 +112,8 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous "></script>
             <script src="/static/js/back_to_topJS.js"></script>
             <script src="/static/js/navbarJS.js"></script>
+            <script src="/static/js/front_page_carouselJS.js"></script>
 </body>
 
 </html>
+        

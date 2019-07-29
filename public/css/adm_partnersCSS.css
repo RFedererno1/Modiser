@@ -1,0 +1,18 @@
+@media (max-width: 767px) {
+    #scrollspy {
+        display: none;
+    }
+}
+
+.img-fluid,
+.card {
+    max-width: 225px;
+}
+
+.img-fluid {
+    height: 100%;
+}
+
+.container-fluid {
+    max-width: 1170px;
+}

@@ -8,18 +8,23 @@ p>a:hover {
     text-decoration: none;
 }
 
-img {
+
+/* img {
     padding: 0.5em;
     width: 200px;
     height: 200px;
+} */
+
+.img-fluid {
+    padding: 0.5em;
+    max-width: 225px;
 }
-
-
 
 .centered {
     display: block;
     margin: auto;
 }
+
 .list-group {
     margin-left: -4%;
     width: 15%;

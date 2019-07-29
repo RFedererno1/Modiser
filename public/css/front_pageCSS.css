@@ -138,3 +138,12 @@ button>a:hover {
         height: 500px;
     }
 }
+
+@media (min-width: 991px) {
+    .masthead {
+        height: 750px;
+    }
+    .carousel-inner-2>.carousel-item>img {
+        height: 750px;
+    }
+}

@@ -1,0 +1,9 @@
+{"_id":{"$numberInt":"8"},"type":"Market","name":"AEON Mall","image_path":"/static/uploads/partners/image-1564410637712.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"9"},"type":"Market","name":"BigC","image_path":"/static/uploads/partners/image-1564410648387.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"10"},"type":"Market","name":"CircleK","image_path":"/static/uploads/partners/image-1564411178593.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"11"},"type":"Market","name":"Coopmart","image_path":"/static/uploads/partners/image-1564411197982.jpeg","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"12"},"type":"Market","name":"Lotte Mart","image_path":"/static/uploads/partners/image-1564411857434.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"13"},"type":"Market","name":"VinMart","image_path":"/static/uploads/partners/image-1564411866387.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"14"},"type":"Brand","name":"BiC","image_path":"/static/uploads/partners/image-1564412236644.jpeg","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"15"},"type":"Brand","name":"Pagoda Foods","image_path":"/static/uploads/partners/image-1564412249592.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"16"},"type":"Brand","name":"Eikodo","image_path":"/static/uploads/partners/image-1564412262550.png","__v":{"$numberInt":"0"}}

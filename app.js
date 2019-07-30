@@ -43,6 +43,10 @@ db.once("open", function(callback) {
 
 var partner_db = mongoose.model('partner_db', schemas.partner_schema);
 
+var category_db = mongoose.model('category_db', schemas.CategorySchema);
+
+var product_db = mongoose.model('product_db', schemas.ProductSchema);
+
 
 // Upload destinations //
 
@@ -57,6 +61,18 @@ var storage_partner = multer.diskStorage({
 })
 
 var upload_partner = multer({ storage: storage_partner })
+
+var product_upload_path = path.join(__dirname, 'public/uploads/products');
+var storage_product = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, product_upload_path)
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype))
+    }
+})
+
+var upload_product = multer({ storage: storage_product })
 
 /////////////////////////
 //    POST SECTION    //
@@ -91,6 +107,41 @@ app.post('/remove-partner/id=:id', function(req, res) {
 
         res.sendStatus(200);
     })
+})
+
+app.post('/adjust-product/add-category', function(req, res) {
+    var _category = new category_db(req.body);
+    console.log(_category);
+    _category.save( {
+    })
+    res.redirect('/adjust-product');
+})
+
+app.post('/remove-category/id=:id', function(req, res) {
+
+    category_db.deleteOne({ _id: req.params["id"] }, function(err) {
+        if (err) throw err;
+
+        res.sendStatus(200);
+    })
+})
+
+app.post("/adjust-product/add-product", upload_product.single('ImageProduct'), function(req, res) {
+    var _product = new product_db(req.body);
+    _product.image_path = '/static/uploads/products/' + req.file.filename;
+
+    console.log(_product);
+    _product.save(function(err) {
+        if (err) throw err;
+        category_db.update(
+            { _id: _product.CategoryIdProduct},
+            { $push: { ProductCountCategory: _product._id } }, function(err){
+                if (err) throw err;
+            }
+        )
+        console.log("New product saved.");
+    })
+    res.redirect('/adjust-product');
 })
 
 /////////////////////////
@@ -129,6 +180,17 @@ app.get('/adm-partners', function(req, res) {
         res.render('adm_partners', { partners: result });
     })
 });
+
+app.get('/adjust-product', function(req, res) {
+    category_db.find({}, function(err0, result0) {
+        if (err0) throw err0;
+        product_db.find({}, function(err1, result1) {
+            if (err1) throw err1;
+            res.render('product_A&R', { category: result0, product: result1 });
+        })
+    })
+});
+
 ////////////////////
 // Handle Errors //
 //////////////////

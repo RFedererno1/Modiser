@@ -95,7 +95,7 @@ app.post('/remove-partner/id=:id', function(req, res) {
     partner_db.find({ _id: req.params["id"] }, function(err, result) {
         if (err) throw err;
 
-        var remove_file_dest = partner_upload_path + '\\' + result[0].image_path.split("/")[4];
+        var remove_file_dest = partner_upload_path + '/' + result[0].image_path.split("/")[4];
         fs.unlink(remove_file_dest, function(error) {
             if (err) throw err;
             console.log("Removed file at path: " + remove_file_dest);
@@ -118,6 +118,25 @@ app.post('/adjust-product/add-category', function(req, res) {
 
 app.post('/remove-category/id=:id', function(req, res) {
 
+    category_db.find({ _id: req.params["id"] }, function(err, result) {
+        if (err) throw err;
+        if (result[0].ProductCountCategory.length>0){
+            for (var i=0;i<result[0].ProductCountCategory.length;i++){
+                product_db.find({ _id: result[0].ProductCountCategory[i] }, function(err, result0) {
+            
+                    var remove_file_dest = product_upload_path + '/' + result0[0].ImagePathProduct.split("/")[4];
+                    fs.unlink(remove_file_dest, function(error) {
+                        if (err) throw err;
+                        console.log("Removed file at path: " + remove_file_dest);
+                    });
+                });
+
+                product_db.deleteOne({ _id: result[0].ProductCountCategory[i] }, function(err) {
+                })
+            }
+        }
+    });
+
     category_db.deleteOne({ _id: req.params["id"] }, function(err) {
         if (err) throw err;
 
@@ -139,6 +158,29 @@ app.post("/adjust-product/add-product", upload_product.single('ImageProduct'), f
     res.redirect('/adjust-product');
 })
 
+app.post('/remove-product/id=:id', function(req, res) {
+
+    product_db.find({ _id: req.params["id"] }, function(err, result) {
+        if (err) throw err;
+
+        category_db.update({ _id: result[0].CategoryIdProduct }, { $pull: { ProductCountCategory: result[0]._id } }, function(err) {
+            if (err) throw err;
+        })
+        console.log("Product deleted.");
+
+        var remove_file_dest = product_upload_path + '/' + result[0].ImagePathProduct.split("/")[4];
+        fs.unlink(remove_file_dest, function(error) {
+            if (err) throw err;
+            console.log("Removed file at path: " + remove_file_dest);
+        });
+    });
+
+    product_db.deleteOne({ _id: req.params["id"] }, function(err) {
+        if (err) throw err;
+
+        res.sendStatus(200);
+    })
+})
 
 app.post('/adjust-product/modify-category-id=:id', function(req, res) {
     _category = new category_db(req.body);
@@ -157,7 +199,7 @@ app.post('/adjust-product/modify-product-id=:id', upload_product.single('ImagePr
             if (err) throw err;
 
             if (result[0].ImagePathProduct != undefined) {
-                var remove_file_dest = product_upload_path + '\\' + result[0].ImagePathProduct.split("/")[4];
+                var remove_file_dest = product_upload_path + '/' + result[0].ImagePathProduct.split("/")[4];
                 fs.unlink(remove_file_dest, function(error) {
                     if (err) throw err;
                     console.log("Removed file at path: " + remove_file_dest);

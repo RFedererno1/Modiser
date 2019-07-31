@@ -61,7 +61,7 @@
                                                                                 <div class="col-md-7">
                                                                                     <p>
                                                                                         <span id="name" style="font-size: 20px;"><b> <%= product[j].NameProduct %> </b></span>
-                                                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Delete" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-left:5px; background-color: red; border-color: red;">
+                                                                                        <button class="btn btn-primary btn-danger" type="button" data-toggle="modal" data-target="#Delete" aria-expanded="false" aria-controls="collapseExample" data-delete-link="<%= productIden %>" style="float: right; margin-left:5px; background-color: red; border-color: red;">
                                                                                         Delete
                                                                                     </button>
                                                                                         <button class="btn btn-primary product_mod" type="button" data-toggle="modal" data-target="#modifyProduct" aria-expanded="false" aria-controls="collapseExample" data-id="<%= product[j]._id %>" style="float: right;">
@@ -80,8 +80,8 @@
                                                                                         </p>
                                                                                     </p>
                                                                                 </div>
+                                                                                <hr>
                                                                             </div>
-                                                                            <hr>
                                                                             <% } %>
                                                                                 <% } %>
                                                                                     <% } %>
@@ -108,7 +108,7 @@
                                                                 <h4 class="modal-title">Are you sure ?</h4>
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                             </div>
-                                                            <form id="deleteCategory">
+                                                            <form id="deleteCategoryAndProduct">
                                                                 <div class="modal-footer">
                                                                     <div style="text-align: center;">
                                                                         <button class="btn btn-primary btnRemove" type="submit" data-toggle="collapse" value="_remove" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">

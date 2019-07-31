@@ -1,23 +1,23 @@
 $(document).on('click', '.btn-danger', function() {
-    $('#deleteCategory').data('id', $(this).data('delete-link'));
+    $('#deleteCategoryAndProduct').data('id', $(this).data('delete-link'));
 });
 
 $('.btnRemove').on('click', function(e) {
     e.preventDefault();
 
-    var id = $('#deleteCategory').data('id');
-    var db_id = $('#deleteCategory').data('id').split("_")[1];;
-    $('#' + id).remove();
-    $('#Delete').modal('hide');
-    fetch('/remove-category/id=' + db_id, { method: 'POST' });
-});
-
-$(document).on('click', '.btn-danger', function() {
-    $('#deleteCategory').data('id', $(this).data('delete-link'));
-});
-
-$(document).on('click', '.btn-danger', function() {
-    $('#deleteCategory').data('id', $(this).data('delete-link'));
+    var id = $('#deleteCategoryAndProduct').data('id');
+    var db_kind = $('#deleteCategoryAndProduct').data('id').split("_")[0];
+    var db_id = $('#deleteCategoryAndProduct').data('id').split("_")[1];
+    if (db_kind=="Category"){
+        $('#' + id).remove();
+        $('#Delete').modal('hide');
+        fetch('/remove-category/id=' + db_id, { method: 'POST' });
+    }
+    else if (db_kind=="Prod"){
+        $('#' + id).remove();
+        $('#Delete').modal('hide');
+        fetch('/remove-product/id=' + db_id, { method: 'POST' });
+    }
 });
 
 $(document).on('click', '#addProductBtn', function() {

@@ -112,8 +112,7 @@ app.post('/remove-partner/id=:id', function(req, res) {
 app.post('/adjust-product/add-category', function(req, res) {
     var _category = new category_db(req.body);
     console.log(_category);
-    _category.save( {
-    })
+    _category.save({})
     res.redirect('/adjust-product');
 })
 
@@ -128,18 +127,50 @@ app.post('/remove-category/id=:id', function(req, res) {
 
 app.post("/adjust-product/add-product", upload_product.single('ImageProduct'), function(req, res) {
     var _product = new product_db(req.body);
-    _product.image_path = '/static/uploads/products/' + req.file.filename;
+    _product.ImagePathProduct = '/static/uploads/products/' + req.file.filename;
 
-    console.log(_product);
     _product.save(function(err) {
         if (err) throw err;
-        category_db.update(
-            { _id: _product.CategoryIdProduct},
-            { $push: { ProductCountCategory: _product._id } }, function(err){
-                if (err) throw err;
-            }
-        )
+        category_db.update({ _id: _product.CategoryIdProduct }, { $push: { ProductCountCategory: _product._id } }, function(err) {
+            if (err) throw err;
+        })
         console.log("New product saved.");
+    })
+    res.redirect('/adjust-product');
+})
+
+
+app.post('/adjust-product/modify-category-id=:id', function(req, res) {
+    _category = new category_db(req.body);
+    category_db.update({ _id: req.params["id"] }, _category, function(err) {
+        if (err) throw err;
+        console.log("Category id " + req.params["id"] + " successfully updated");
+    })
+    res.redirect('/adjust-product');
+});
+
+app.post('/adjust-product/modify-product-id=:id', upload_product.single('ImageProduct'), function(req, res) {
+    _product = new product_db(req.body);
+
+    if (req.file != undefined) {
+        product_db.find({ _id: req.params["id"] }, function(err, result) {
+            if (err) throw err;
+
+            if (result[0].ImagePathProduct != undefined) {
+                var remove_file_dest = product_upload_path + '\\' + result[0].ImagePathProduct.split("/")[4];
+                fs.unlink(remove_file_dest, function(error) {
+                    if (err) throw err;
+                    console.log("Removed file at path: " + remove_file_dest);
+                });
+            }
+        });
+
+        _product.ImagePathProduct = '/static/uploads/products/' + req.file.filename;
+    }
+
+    product_db.update({ _id: req.params["id"] }, _product, function(err) {
+        if (err) throw err;
+        console.log("Product id " + req.params["id"] + " successfully updated.")
     })
     res.redirect('/adjust-product');
 })
@@ -190,6 +221,10 @@ app.get('/adjust-product', function(req, res) {
         })
     })
 });
+
+app.get('/adm-news', function(req, res) {
+    res.render('adm_news');
+})
 
 ////////////////////
 // Handle Errors //

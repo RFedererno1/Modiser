@@ -4,13 +4,10 @@
     }
 }
 
-.img-fluid,
-.card {
-    max-width: 225px;
-}
-
 .img-fluid {
-    height: 100%;
+    min-width: 200px;
+    min-height: 200px;
+    max-height: 225px;
 }
 
 .container-fluid {

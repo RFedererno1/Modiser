@@ -26,214 +26,237 @@
         <div class="jumbotron jumbotron-fluid my-0">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-9">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
                         <h1>Category</h1>
-                            <% if (category.length != 0) {%>
-                                <% for (var i = 0; i < category.length; i++){ %>
-                                    <% var categoryIdExpand = "#expandProduct_" + category[i]._id %>
+                        <% if (category.length != 0) {%>
+                            <% for (var i = 0; i < category.length; i++){ %>
+                                <% var categoryIdExpand = "#expandProduct_" + category[i]._id %>
                                     <% var categoryIdForCategory = "Category_" + category[i]._id %>
-                                    <div id="<%= categoryIdForCategory %>">
-                                    <p>
-                                            <span style="font-size: 25px;"><b><%= category[i].NameCategory %></b></span>
-                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="<%= categoryIdExpand %>" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-left:5px;">
+                                        <div id="<%= categoryIdForCategory %>">
+                                            <p>
+                                                <span style="font-size: 25px;"><b><%= category[i].NameCategory %></b></span>
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="<%= categoryIdExpand %>" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-left:5px;">
                                                 ...
                                             </button>
-                                            <button class="btn btn-primary btn-danger" type="button" data-toggle="modal" data-target="#Delete" aria-expanded="false" aria-controls="collapseExample" data-delete-link="<%= categoryIdForCategory %>" style="float: right; margin-left:5px; background-color: red; border-color: red;">
+                                                <button class="btn btn-primary btn-danger" type="button" data-toggle="modal" data-target="#Delete" aria-expanded="false" aria-controls="collapseExample" data-delete-link="<%= categoryIdForCategory %>" style="float: right; margin-left:5px; background-color: red; border-color: red;">
                                                 Delete
                                             </button>
-                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modifyCategory" aria-expanded="false" aria-controls="collapseExample" style="float: right;">
+                                                <button class="btn btn-primary category_mod" type="button" data-toggle="modal" data-target="#modifyCategory" aria-expanded="false" aria-controls="collapseExample" data-id="<%= category[i]._id %>" style="float: right;">
                                                 Modify
                                             </button>
-                                    </p>
-                                    <div class="collapse" id="<%= categoryIdExpand.split('#')[1] %>">
-                                            <div class="card card-body">
-                                                <div>
-                                                    <% if (category[i].ProductCountCategory.length != 0) {%>
-                                                        <% for (var k = 0; k < category[i].ProductCountCategory.length; k++){ %>
-                                                            <% for (var j = 0; j < product.length; j++){ %>
-                                                                <% if (category[i].ProductCountCategory[k]==product[j]._id){ %>
-                                                                    <p>
-                                                                            <span style="font-size: 20px;"><b> <%= product[j].NameProduct %> </b></span>
-                                                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Delete" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-left:5px; background-color: red; border-color: red;">
-                                                                                Delete
-                                                                            </button>
-                                                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modifyProduct" aria-expanded="false" aria-controls="collapseExample" style="float: right;">
-                                                                                Modify
-                                                                            </button>
-                                                                            <p>
-                                                                                <b>Origin:</b> <%= product[j].OriginProduct %>
-                                                                                <br>
-                                                                                <b>Barcode:</b> <%= product[j].BarcodeProduct %>
-                                                                                <br>
-                                                                                <b>Product Description:</b> <%= product[j].DescriptionProduct %>
-                                                                                <br>
-                                                                            </p>
-                                                                        </p>
-                                                                        <hr>
-                                                                <% } %>
-                                                            <% } %>
-                                                        <% } %>
-                                                    <% } %>
-                                                    <p>
-                                                        <button id="addProductBtn" data-category-id="<%= category[i]._id %>" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProduct" aria-expanded="false" aria-controls="collapseExample" >
-                                                            Add Product
-                                                        </button>                            
-                                                    </p>
+                                            </p>
+                                            <div class="collapse" id="<%= categoryIdExpand.split('#')[1] %>">
+                                                <div class="card card-body">
+                                                    <div>
+                                                        <% if (category[i].ProductCountCategory.length != 0) {%>
+                                                            <% for (var k = 0; k < category[i].ProductCountCategory.length; k++){ %>
+                                                                <% for (var j = 0; j < product.length; j++){ %>
+                                                                    <% if (category[i].ProductCountCategory[k] == product[j]._id){ %>
+                                                                        <% var productIden = "Prod_" + product[j]._id %>
+                                                                            <div id="<%= productIden %>" class="row">
+                                                                                <div class="col-md-5">
+                                                                                    <img class="img-fluid img-thumbnail" alt="product-thumbnail" src="<%= product[j].ImagePathProduct %>">
+                                                                                </div>
+                                                                                <div class="col-md-7">
+                                                                                    <p>
+                                                                                        <span id="name" style="font-size: 20px;"><b> <%= product[j].NameProduct %> </b></span>
+                                                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#Delete" aria-expanded="false" aria-controls="collapseExample" style="float: right; margin-left:5px; background-color: red; border-color: red;">
+                                                                                        Delete
+                                                                                    </button>
+                                                                                        <button class="btn btn-primary product_mod" type="button" data-toggle="modal" data-target="#modifyProduct" aria-expanded="false" aria-controls="collapseExample" data-id="<%= product[j]._id %>" style="float: right;">
+                                                                                        Modify
+                                                                                    </button>
+                                                                                        <p>
+                                                                                            <b>Origin:</b>
+                                                                                            <span id="origin"><%= product[j].OriginProduct %></span>
+                                                                                            <br>
+                                                                                            <b>Barcode:</b>
+                                                                                            <span id="barcode"><%= product[j].BarcodeProduct %></span>
+                                                                                            <br>
+                                                                                            <b>Product Description:</b>
+                                                                                            <span id="description"><%= product[j].DescriptionProduct %></span>
+                                                                                            <br>
+                                                                                        </p>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <% } %>
+                                                                                <% } %>
+                                                                                    <% } %>
+                                                                                        <% } %>
+                                                                                            <p>
+                                                                                                <button id="addProductBtn" data-category-id="<%= category[i]._id %>" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addProduct" aria-expanded="false" aria-controls="collapseExample">
+                                                                                                Add Product
+                                                                                            </button>
+                                                                                            </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                    </div>
-                                    <hr>
-                                    </div>
-                                <% } %>
-                            <% } %>
-
-                        
-                        <!-- delete modal -->
-                        <div class="modal fade" id="Delete" role="dialog">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Are you sure ?</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <form id="deleteCategory">
-                                <div class="modal-footer">
-                                    <div style="text-align: center;">
-                                        <button class="btn btn-primary btnRemove" type="submit" data-toggle="collapse" value="_remove" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
-                                            Yes
-                                        </button>
-                                    </div>
-                                    <div style="text-align: center;">
-                                        <button class="btn btn-primary" type="button" data-dismiss="modal" aria-expanded="false" aria-controls="collapseExample" style="width: 5em; background-color: red; border-color: red;" align="right">
-                                            No
-                                        </button>
-                                    </div>
-                                </div>
-                                </form>
-                              </div>
-                            </div>
-                        </div>
-                        <p>
-                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCategory" aria-expanded="false" aria-controls="collapseExample" >
-                                Add Category
-                            </button>                            
-                        </p>
-
-                        <!-- add category modal -->
-                        <div class="modal fade" id="addCategory" role="dialog">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Add Category</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                
-                                <form method="POST" action="/adjust-product/add-category">
-                                            <div class="modal-body">
-                                                <p><b>Name:</b></p>
-                                                <input style="width:100%" type="text" name="NameCategory" required>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <div style="text-align: center;">
-                                                    <button class="btn btn-primary" type="submit" style="width: 5em;" align="right">
-                                                        Submit
-                                                    </button>
-                                                </div>
-                                            </div>
-                                </form>
-                              </div>
-                            </div>
-                        </div>
-
-                        <!-- modify category modal -->
-                        <div class="modal fade" id="modifyCategory" role="dialog">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Modify Category</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p><b>Name:</b></p>
-                                    <input style="width:100%" type="text" name="addNameCategory">
-                                </div>
-                                <div class="modal-footer">
-                                    <div style="text-align: center;">
-                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#submitCategory" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-
-                        <!-- add product modal -->
-                        <div class="modal fade" id="addProduct" role="dialog">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Add Product</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <form id="addProductForm" method="POST" action="/adjust-product/add-product" enctype="multipart/form-data">
-                                    <div class="modal-body">
-                                        <p><b>Name:</b></p>
-                                        <input style="width:100%" type="text" name="NameProduct" required>
-                                        <p><b>Origin:</b></p>
-                                        <input style="width:100%" type="text" name="OriginProduct" required>
-                                        <p><b>Barcode:</b></p>
-                                        <input style="width:100%" type="text" name="BarcodeProduct" required>
-                                        <p><b>Description:</b></p>
-                                        <textarea rows="3" style="width: 100%;" style="width:100%" type="text" name="DescriptionProduct" required></textarea>
-                                        <p><b>Image:</b></p>
-                                        <input type="file" class="form-control-file" name="ImageProduct" accept="image/*" required>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div style="text-align: center;">
-                                            <button id="submitAddProductBtn" class="btn btn-primary" type="submit" style="width: 5em;" align="right">
-                                                Submit
-                                            </button>
+                                            <hr>
                                         </div>
-                                    </div>
-                                </form>
-                                
-                              </div>
-                            </div>
-                        </div>
+                                        <% } %>
+                                            <% } %>
 
-                        <!-- modify product modal -->
-                        <div class="modal fade" id="modifyProduct" role="dialog">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Modify Product</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p><b>Name:</b></p>
-                                    <input style="width:100%" type="text" name="modifyNameProduct">
-                                    <p><b>Origin:</b></p>
-                                    <input style="width:100%" type="text" name="modifyOriginProduct">
-                                    <p><b>UPC:</b></p>
-                                    <input style="width:100%" type="text" name="modifyUPCProduct">
-                                    <p><b>Product Description:</b></p>
-                                    <textarea style="width:100%" rows=3 name = "modifyDescriptionProduct">
-                                    </textarea>
-                                    <p><b>Image:</b></p>
-                                    <input type="file" name="modifyImageProduct" accept="image/*">
-                                </div>
-                                <div class="modal-footer">
-                                    <div style="text-align: center;">
-                                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#submitCategory" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
+
+                                                <!-- delete modal -->
+                                                <div class="modal fade" id="Delete" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Are you sure ?</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <form id="deleteCategory">
+                                                                <div class="modal-footer">
+                                                                    <div style="text-align: center;">
+                                                                        <button class="btn btn-primary btnRemove" type="submit" data-toggle="collapse" value="_remove" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
+                                                                            Yes
+                                                                        </button>
+                                                                    </div>
+                                                                    <div style="text-align: center;">
+                                                                        <button class="btn btn-primary" type="button" data-dismiss="modal" aria-expanded="false" aria-controls="collapseExample" style="width: 5em; background-color: red; border-color: red;" align="right">
+                                                                            No
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <p>
+                                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#addCategory" aria-expanded="false" aria-controls="collapseExample">
+                                                        Add Category
+                                                    </button>
+                                                </p>
+
+                                                <!-- add category modal -->
+                                                <div class="modal fade" id="addCategory" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Add Category</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+
+                                                            <form method="POST" action="/adjust-product/add-category">
+                                                                <div class="modal-body">
+                                                                    <p><b>Name:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="text" name="NameCategory" required>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div style="text-align: center;">
+                                                                        <button class="btn btn-primary" type="submit" style="width: 5em;" align="right">
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- modify category modal -->
+                                                <div class="modal fade" id="modifyCategory" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <form id="modifyCategoryForm" method="POST">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Modify Category</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p><b>Name:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="text" name="NameCategory">
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div style="text-align: center;">
+                                                                        <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#submitCategory" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                                <!-- add product modal -->
+                                                <div class="modal fade" id="addProduct" role="dialog">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Add Product</h4>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            </div>
+                                                            <form id="addProductForm" method="POST" action="/adjust-product/add-product" enctype="multipart/form-data">
+                                                                <div class="modal-body">
+                                                                    <p><b>Name:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="text" name="NameProduct" required>
+                                                                    <p><b>Origin:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="text" name="OriginProduct" required>
+                                                                    <p><b>Barcode:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="number" name="BarcodeProduct" required>
+                                                                    <p><b>Description:</b></p>
+                                                                    <textarea class="form-control" rows="3" style="width: 100%;" style="width:100%" type="text" name="DescriptionProduct" required></textarea>
+                                                                    <p><b>Image:</b></p>
+                                                                    <input class="file-form-control" type="file" class="form-control-file" name="ImageProduct" accept="image/*" required>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div style="text-align: center;">
+                                                                        <button id="submitAddProductBtn" class="btn btn-primary" type="submit" style="width: 5em;" align="right">                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- modify product modal -->
+                                                <div class="modal fade" id="modifyProduct" role="dialog">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <form id="modifyProductForm" method="POST" enctype="multipart/form-data">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title">Modify Product</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p><b>Name:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="text" name="NameProduct">
+                                                                    <p><b>Origin:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="text" name="OriginProduct">
+                                                                    <p><b>UPC:</b></p>
+                                                                    <input class="form-control" style="width:100%" type="number" name="BarcodeProduct">
+                                                                    <p><b>Product Description:</b></p>
+                                                                    <textarea class="form-control" style="width:100%" rows=3 name="DescriptionProduct">
+                                                                    </textarea>
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <p><b>Current Image:</b></p>
+                                                                            <img class="img-fluid img-thumbnail" alt="currentImage" src="">
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <p><b>New Image:</b></p>
+                                                                            <input class="file-form-control" type="file" name="ImageProduct" accept="image/*">
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <div style="text-align: center;">
+                                                                        <button class="btn btn-primary" type="submit" data-toggle="collapse" data-target="#submitCategory" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
+                                                                            Submit
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
                     </div>
                 </div>
             </div>

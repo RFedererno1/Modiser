@@ -62,6 +62,18 @@ var storage_partner = multer.diskStorage({
 
 var upload_partner = multer({ storage: storage_partner })
 
+var category_upload_path = path.join(__dirname, 'public/uploads/categories');
+var storage_category = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, category_upload_path)
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype))
+    }
+})
+
+var upload_category = multer({ storage: storage_category })
+
 var product_upload_path = path.join(__dirname, 'public/uploads/products');
 var storage_product = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -109,8 +121,9 @@ app.post('/remove-partner/id=:id', function(req, res) {
     })
 })
 
-app.post('/adjust-product/add-category', function(req, res) {
+app.post('/adjust-product/add-category', upload_category.single('imageCategory'), function(req, res) {
     var _category = new category_db(req.body);
+    _category.imagePathCategory = '/static/uploads/categories/' + req.file.filename;
     console.log(_category);
     _category.save({})
     res.redirect('/adjust-product');
@@ -120,10 +133,15 @@ app.post('/remove-category/id=:id', function(req, res) {
 
     category_db.find({ _id: req.params["id"] }, function(err, result) {
         if (err) throw err;
-        if (result[0].ProductCountCategory.length>0){
-            for (var i=0;i<result[0].ProductCountCategory.length;i++){
+        var remove_file_dest = category_upload_path + '/' + result[0].imagePathCategory.split("/")[4];
+        fs.unlink(remove_file_dest, function(error) {
+            if (err) throw err;
+            console.log("Removed file at path: " + remove_file_dest);
+        });
+        if (result[0].ProductCountCategory.length > 0) {
+            for (var i = 0; i < result[0].ProductCountCategory.length; i++) {
                 product_db.find({ _id: result[0].ProductCountCategory[i] }, function(err, result0) {
-            
+
                     var remove_file_dest = product_upload_path + '/' + result0[0].ImagePathProduct.split("/")[4];
                     fs.unlink(remove_file_dest, function(error) {
                         if (err) throw err;
@@ -131,8 +149,7 @@ app.post('/remove-category/id=:id', function(req, res) {
                     });
                 });
 
-                product_db.deleteOne({ _id: result[0].ProductCountCategory[i] }, function(err) {
-                })
+                product_db.deleteOne({ _id: result[0].ProductCountCategory[i] }, function(err) {})
             }
         }
     });
@@ -182,8 +199,25 @@ app.post('/remove-product/id=:id', function(req, res) {
     })
 })
 
-app.post('/adjust-product/modify-category-id=:id', function(req, res) {
+app.post('/adjust-product/modify-category-id=:id', upload_category.single('imageCategory'), function(req, res) {
     _category = new category_db(req.body);
+
+    if (req.file != undefined) {
+        category_db.find({ _id: req.params["id"] }, function(err, result) {
+            if (err) throw err;
+
+            if (result[0].imagePathCategory != undefined) {
+                var remove_file_dest = category_upload_path + '/' + result[0].imagePathCategory.split("/")[4];
+                fs.unlink(remove_file_dest, function(error) {
+                    if (err) throw err;
+                    console.log("Removed file at path: " + remove_file_dest);
+                });
+            }
+        });
+
+        _category.imagePathCategory = '/static/uploads/categories/' + req.file.filename;
+    }
+
     category_db.update({ _id: req.params["id"] }, _category, function(err) {
         if (err) throw err;
         console.log("Category id " + req.params["id"] + " successfully updated");
@@ -231,8 +265,12 @@ app.get('/about-us', function(req, res) {
 });
 
 app.get('/products', function(req, res) {
-    res.render('products');
+    category_db.find({}, function(err, result) {
+        if (err) throw err;
+        res.render('products', { category: result });
+    })
 });
+
 app.get('/our-partners', function(req, res) {
     partner_db.find({}, function(err, result) {
         if (err) throw err;
@@ -268,6 +306,19 @@ app.get('/adm-news', function(req, res) {
     res.render('adm_news');
 })
 
+app.get('/product-list=:id', function(req, res) {
+    var categoryName;
+    category_db.find({ _id: req.params["id"] }, function(err, result) {
+        if (err) throw err;
+
+        categoryName = result[0].NameCategory;
+    });
+    product_db.find({}, function(err, result) {
+        if (err) throw err;
+        res.render('product_list', { products: result, categoryId: req.params["id"], name: categoryName });
+    })
+});
+
 ////////////////////
 // Handle Errors //
 //////////////////
@@ -275,6 +326,8 @@ app.get('/adm-news', function(req, res) {
 app.get('/err=:err_name', function(req, res) {
     res.render('error_handler', { message: req.params.err_name })
 });
+
+
 
 
 // Handle unknown queries

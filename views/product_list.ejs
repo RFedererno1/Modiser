@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- CSSs -->
+
+    <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/product_listCSS.css" type="text/css">
+
+    <title>ProductA&R</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <a id='button'></a>
+        <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0;">
+            <div class="container">
+                <hr>
+                <p style="font-weight: 500; font-size: 1.25em;">
+                    <a href="/">Modiser</a> >
+                    <% var link = "/product-list=" + categoryId; %>
+                        <a href="<%= link %>">
+                            <%= name %>
+                        </a>
+                </p>
+                <hr>
+                <div class="row">
+                    <% for (var i=0; i < products.length; i++){ %>
+                        <% if (products[i].CategoryIdProduct == categoryId) { %>
+                            <div class="col-md-6 my-3">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid img-thumbnail" alt="currentImage" src="<%= products[i].ImagePathProduct %>">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <b>Name:</b>
+                                        <span id="description"><%= products[i].NameProduct %></span>
+                                        <br>
+                                        <b>Origin:</b>
+                                        <span id="description"><%= products[i].OriginProduct %></span>
+                                        <br>
+                                        <b>Barcode:</b>
+                                        <span id="description"><%= products[i].BarcodeProduct %></span>
+                                        <br>
+                                        <b>Description:</b>
+                                        <span id="description"><%= products[i].DescriptionProduct %></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                                <% } %>
+                </div>
+            </div>
+        </div>
+        </div>
+        <%- include('footer') %>
+
+            <!-- Bootstrap JS -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="/static/js/back_to_topJS.js"></script>
+            <script src="/static/js/navbarJS.js"></script>
+            <script src="/static/js/product_A&RJS.js"></script>
+</body>
+
+</html>

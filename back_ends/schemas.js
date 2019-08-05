@@ -13,6 +13,7 @@ var partner_schema = new mongoose.Schema({
 
 var CategorySchema = new mongoose.Schema({
     NameCategory: String,
+    imagePathCategory: String,
     ProductCountCategory: [Number]
 });
 

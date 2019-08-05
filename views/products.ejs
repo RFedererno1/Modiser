@@ -32,76 +32,29 @@
                     <a href="/products">Products</a>
                 </p>
                 <hr>
-                <div id="view_section" style="padding-top: 1em">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <img src="/static/Tamarine_Paste_900x900.jpg" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title font-weight-bold"><a href="#">Product Title</a></h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text text-right"><a href="#"><small class="text-muted">Read More >></small></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <img src="/static/Tamarine_Paste_900x900.jpg" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title font-weight-bold"><a href="#">Product Title</a></h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text text-right"><a href="#"><small class="text-muted">Read More >></small></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <img src="/static/Tamarine_Paste_900x900.jpg" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title font-weight-bold"><a href="#">Product Title</a></h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text text-right"><a href="#"><small class="text-muted">Read More >></small></a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <img src="/static/Tamarine_Paste_900x900.jpg" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title font-weight-bold"><a href="#">Product Title</a></h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text text-right"><a href="#"><small class="text-muted">Read More >></small></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <img src="/static/Tamarine_Paste_900x900.jpg" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title font-weight-bold"><a href="#">Product Title</a></h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text text-right"><a href="#"><small class="text-muted">Read More >></small></a></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <img src="/static/Tamarine_Paste_900x900.jpg" class="card-img-top">
-                                <div class="card-body">
-                                    <h5 class="card-title font-weight-bold"><a href="#">Product Title</a></h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <p class="card-text text-right"><a href="#"><small class="text-muted">Read More >></small></a></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
+                <div class="row">
+                    <% for (var i=0; i < category.length; i++){ %>
+                        <% var categoryImage=category[i].imagePathCategory; %>
+                            <% var categoryId= "category_" + category[i]._id; %>
+                                <% var link = "/product-list=" + category[i]._id; %>
+                                    <div id="<%= categoryId %>" class="col-md-6">
+                                        <div>
+                                            <div class="hovereffect">
+                                                <center><img class="img-responsive" src="<%= categoryImage %>" alt="" style="width: 400px;height: 300px;"></center>
+                                                <div class="overlay">
+                                                    <h2>
+                                                        <%= category[i].NameCategory %>
+                                                    </h2>
+                                                    <a class="info" href="<%= link %>">Explore</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
                 </div>
+
             </div>
+        </div>
         </div>
         <%- include('footer') %>
             <!-- Bootstrap JS -->

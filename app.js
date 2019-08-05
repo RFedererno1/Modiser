@@ -7,7 +7,9 @@ var multer = require("multer");
 var bodyParser = require('body-parser');
 var mime = require('mime');
 var fs = require('fs');
+var crypto = require('crypto');
 
+const port = 3000;
 
 var app = express();
 
@@ -25,6 +27,8 @@ app.set("views", path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(express.json());
+
+const secret = 'abcdefg';
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -47,6 +51,7 @@ var category_db = mongoose.model('category_db', schemas.CategorySchema);
 
 var product_db = mongoose.model('product_db', schemas.ProductSchema);
 
+var news_db = mongoose.model('news_db', schemas.news_schema);
 
 // Upload destinations //
 
@@ -86,6 +91,17 @@ var storage_product = multer.diskStorage({
 
 var upload_product = multer({ storage: storage_product })
 
+var news_upload_path = path.join(__dirname, 'public/uploads/news');
+var storage_news = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, news_upload_path)
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype))
+    }
+})
+
+var upload_news = multer({ storage: storage_news });
 /////////////////////////
 //    POST SECTION    //
 ///////////////////////
@@ -251,9 +267,134 @@ app.post('/adjust-product/modify-product-id=:id', upload_product.single('ImagePr
     res.redirect('/adjust-product');
 })
 
-/////////////////////////
-//     GET SECTION    //
-///////////////////////
+app.post('/adm-news/add', upload_news.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'image', maxCount: 999 }]), function(req, res) {
+    _news = new news_db(req.body);
+
+    var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    var d = new Date();
+    _news.upload_date = days[d.getDay()] + ", " + month[d.getMonth()] + " - " + d.getDate() + " - " + d.getFullYear() + ", " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+
+    _news.thumbnail_path = '/static/uploads/news/' + req.files['thumbnail'][0].filename;
+    if (req.files['image']) {
+        for (var i = 0; i < req.files['image'].length; i++) {
+            _news.news_image_path.push('/static/uploads/news/' + req.files['image'][i].filename);
+        }
+    }
+
+    _news.query = crypto.createHmac('sha256', secret).update(_news.title).digest('hex') + '_' + Date.now();
+    _news.save(function(err) {
+        if (err) throw err;
+        console.log("News saved.");
+    });
+    setTimeout(() => {
+        res.redirect('/adm-news');
+    }, 1000);
+})
+
+app.post('/adm-news/remove-id=:id', function(req, res) {
+
+    news_db.find({ _id: req.params["id"] }, function(err, result) {
+
+        var remove_file_dest = [];
+        remove_file_dest.push(news_upload_path + '/' + result[0].thumbnail_path.split("/")[4]);
+        if (result.news_image_path) {
+            for (var i = 0; i < result.news_image_path.length; i++) {
+                remove_file_dest.push(news_upload_path + '/' + result[0].news_image_path[i].split("/")[4]);
+            }
+        }
+        remove_files(remove_file_dest, console.log);
+    });
+
+    news_db.deleteOne({ _id: req.params["id"] }, function(err) {
+        if (err) throw err;
+
+        res.sendStatus(200);
+    })
+});
+
+app.post("/adm-news/manage-news-id=:id", upload_news.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'image', maxCount: 999 }]), function(req, res) {
+        _news = new news_db(req.body);
+        var flow = req.body.flow;
+        if (flow == undefined) flow = "a";
+        console.log(req.files);
+        console.log(_news);
+        news_db.find({ _id: req.params["id"] }, function(err, origin) {
+            console.log(origin[0]);
+            // Image management...
+            var remove_file_dest = [];
+
+            // Variable for counting image in images
+            var image_count = 0;
+
+            // Variable for counting new images from the clients
+            var new_img_count = 0;
+
+            // If there is new thumbnail, update it first
+            if (req.body.flow.split('_')[0] == "thumbnail") {
+                remove_file_dest.push(news_upload_path + '/' + origin[0].thumbnail_path.split("/")[4]);
+                _news.thumbnail_path = '/static/uploads/news/' + req.files["thumbnail"][0].filename;
+            }
+
+
+            if (_news.order) {
+                if (origin[0].order) {
+                    var images = origin[0].order.split('_');
+                    // Iterate through every old images and see if they're updated or deprecated
+                    for (var i = 0; i < images.length; i++) {
+                        if (images[i][0] == "i") {
+                            console.log(image_count);
+                            console.log(origin[0].news_image_path[image_count].split("/")[4]);
+                            // If they can be stayed...
+                            if (!req.body.flow.includes(images[i]) && _news.order.includes(images[i])) {
+                                _news.news_image_path.push(origin[0].news_image_path[image_count]);
+
+                                // Else, remove them
+                            } else {
+                                remove_file_dest.push(news_upload_path + origin[0].news_image_path[image_count].split("/")[4]);
+                                // Yet if they're updated...
+                                if (req.body.flow.includes(images[i])) {
+                                    _news.news_image_path.push('/static/uploads/news/' + req.files["image"][new_img_count++].filename);
+                                }
+                            }
+                            image_count++;
+                        }
+                    }
+                }
+                // And check if there is new images
+                if (req.files["image"])
+                    if (new_img_count < req.files["image"].length) {
+                        for (var i = new_img_count; i < req.files["image"].length; i++) {
+                            _news.news_image_path.push('/static/uploads/news/' + req.files["image"][new_img_count++].filename);
+                        }
+                    }
+            } else {
+                if (origin[0].order) {
+                    var images = origin[0].order.split('_');
+                    for (var i = 0; i < images.length; i++) {
+                        if (images[i][0] == "i") {
+                            remove_file_dest.push(origin[0].news_image_path[i]);
+                        }
+                    }
+                }
+            }
+
+            // Remove all unnecessary files
+            remove_files(remove_file_dest, console.log);
+
+
+            // Update the news
+            news_db.update({ _id: req.params["id"] }, _news, function(err) {
+                if (err) throw err;
+                console.log("News is updated.");
+            })
+        });
+
+        res.redirect('/adm-news');
+    })
+    /////////////////////////
+    //     GET SECTION    //
+    ///////////////////////
 
 app.get('/', function(req, res) {
     res.render('front_page');
@@ -306,6 +447,36 @@ app.get('/adm-news', function(req, res) {
     res.render('adm_news');
 })
 
+
+app.get('/get-news/f-id=:id', function(req, res) {
+    news_db.find({ _id: { $lt: req.params["id"] } }).sort({ _id: -1 }).limit(5).exec(function(err, result) {
+        if (err) throw err;
+        res.send(result);
+    })
+})
+
+app.get('/news/:query', function(req, res) {
+    news_db.find({ query: req.params["query"] }, function(err, docs) {
+        if (err) throw err;
+        if (docs.length != 0) {
+            res.render('news_detail', { detail: docs });
+        } else {
+            res.redirect('/err=unknown-site');
+        }
+    })
+})
+
+app.get('/adm-news/query=:query', function(req, res) {
+    news_db.find({ query: req.params["query"] }, function(err, docs) {
+        if (err) throw err;
+        if (docs.length != 0) {
+            res.render('manage_news', { detail: docs });
+        } else {
+            res.redirect('/err=unknown-site');
+        }
+    })
+})
+
 app.get('/product-list=:id', function(req, res) {
     var categoryName;
     category_db.find({ _id: req.params["id"] }, function(err, result) {
@@ -337,5 +508,26 @@ app.get('/*', function(req, res) {
 
 
 ////////////////////////////
-app.listen(3000);
-console.log("Server is listening at port 3000.");
+app.listen(port);
+console.log("Server is listening at port " + port + ".");
+
+///////////////////////////
+//// FUNCTION SECTION ////
+/////////////////////////
+
+function remove_files(files, callback) {
+    if (files != undefined) {
+        var i = files.length;
+        files.forEach(element => {
+            fs.unlink(element, function(err) {
+                i--;
+                if (err) {
+                    callback(err);
+                    return;
+                } else if (i <= 0) {
+                    callback(null);
+                }
+            })
+        });
+    }
+}

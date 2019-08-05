@@ -32,22 +32,25 @@
                 </p>
                 <hr>
                 <a id='button'></a>
-                <!-- NEWS TEMPLATE -->
-                <div class="card job w-100 m-2 shadow rounded" id="">
-                    <div class="news_wrapper clearfix p-2 ">
-                        <div class="logo float-left news_image justify-content-center align-items-center d-flex">
-                            <img src="/static/Tamarine_Paste_900x900.jpg">
+                <div class="col-md-12 news_section">
+                    <div class="row">
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-2">
+                            <div class="lds-roller">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
                         </div>
-                        <div class="news_content float-left w-75 my-1">
-                            <h3><a class="news_link" href="#">News Title</a></h3>
-                            <hr class="my-2">
-                            <p class="lead">
-                                News short contents..
-                            </p>
-                        </div>
+                        <div class="col-sm-5"></div>
                     </div>
                 </div>
-                <!---->
+                <hr id="waypoint">
             </div>
         </div>
         <%- include('footer') %>
@@ -57,6 +60,69 @@
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM " crossorigin="anonymous "></script>
             <script src="/static/js/back_to_topJS.js"></script>
             <script src="/static/js/navbarJS.js"></script>
+
+            <script>
+                function show_item(item) {
+                    var news = `<div class="card m-2 shadow rounded" id="` + item._id + `">
+                                <div class="news_wrapper clearfix p-2">
+                                    <div class="row">
+                                        <div class="col-md-4 news_image">
+                                            <a href="/news/` + item.query + `">               
+                                                <img class="img-fluid img-thumbnail center" src="` + item.thumbnail_path + `">
+                                            </a>
+                                        </div>
+                                        <div class="news_content col-md-8">
+                                            <div class="row">
+                                                <h3><a class="ml-3 text-truncate news_link" href="/news/` + item.query + `">` + item.title + `</a></h3>
+                                            </div>
+                                            <hr class="my-2">
+                                            <span class="text-muted">Posted on ` + item.upload_date + `</span>                                            
+                                            <p class="lead text-truncate">
+                                                    ` + item.summary.replace(/\n/g, "<br />") + `
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                    $('.news_section').append(news).hide().fadeIn(500);
+                };
+
+                var news_lastest_id = Number.MAX_VALUE;
+                var had_news = -1;
+
+                function get_and_show_item() {
+                    $.get("/get-news/f-id=" + news_lastest_id, function(data, status) {
+                        if (data.length != 0)
+                            data.forEach(element => {
+                                show_item(element);
+                                news_lastest_id = element._id;
+                            });
+
+                        if (data.length < 5) news_lastest_id = -1;
+                    });
+                }
+
+                $(document).ready(function() {
+                    $('.lds-roller').show();
+                    get_and_show_item();
+                    setTimeout(function() {
+                        $('.lds-roller').hide();
+                    }, 500)
+                    had_news = 0;
+                })
+
+                $(window).on('scroll', function() {
+                    if (news_lastest_id != -1 && had_news != -1) {
+                        if ($('#waypoint').is(":visible")) {
+                            $('.lds-roller').show();
+                            get_and_show_item();
+                            setTimeout(function() {
+                                $('.lds-roller').hide()
+                            }, 1000);
+                        }
+                    }
+                })
+            </script>
 </body>
 
 </html>

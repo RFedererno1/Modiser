@@ -26,14 +26,30 @@ var ProductSchema = new mongoose.Schema({
     CategoryIdProduct: Number
 })
 
+var news_schema = new mongoose.Schema({
+    title: String,
+    upload_date: String,
+    thumbnail_path: String,
+    summary: String,
+    order: String,
+    news_text: [String],
+    news_image_path: [String],
+    query: String
+})
+
+
 partner_schema.plugin(autoIncrement.plugin, 'partner');
 
 CategorySchema.plugin(autoIncrement.plugin, 'category');
 
 ProductSchema.plugin(autoIncrement.plugin, 'product');
 
+news_schema.plugin(autoIncrement.plugin, 'news');
+
 module.exports.partner_schema = partner_schema;
 
 module.exports.CategorySchema = CategorySchema;
 
 module.exports.ProductSchema = ProductSchema;
+
+module.exports.news_schema = news_schema;

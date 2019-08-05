@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- CSSs -->
+
+    <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/adm_newsCSS.css" type="text/css">
+
+    <title>Manage News</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0;">
+            <div class="container container-fluid">
+                <a id="button"></a>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="list-group" style="position: fixed;" id="scrollspy">
+                            <a class="list-group-item center add_news_btn" href="" data-toggle="modal" data-target="#add_modal" style="color: black;">Add News</a>
+                        </div>
+                    </div>
+                    <div class="col-md-10 news_section">
+                        <div class="row">
+                            <div class="col-sm-5"></div>
+                            <div class="col-sm-2">
+                                <div class="lds-roller">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-5"></div>
+                        </div>
+                    </div>
+                </div>
+                <hr id="waypoint">
+            </div>
+        </div>
+
+        <!-- Add News Modal -->
+        <div class="modal fade bs-modal-sm" tabindex="-1" id="add_modal" role="dialog" aria-hidden="true">
+            <form id="add-form" method="POST" action="/adm-news/add" enctype="multipart/form-data">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add News</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="add_news_wrapper form-group">
+                                <label for="title"><strong>Title: </strong></label>
+                                <input type="text" class="form-control" name="title" required>
+                                <hr>
+                                <label for="thumbnail"><strong>Thumbnail:</strong></label>
+                                <input type="file" class="form-control-file" name="thumbnail" required>
+                                <hr>
+                                <label for="summary"><strong>News Summary:</strong></label>
+                                <textarea rows="5" class="form-control" name="summary" required></textarea>
+                                <hr>
+                                <input type="text" id="order" name="order" style="display: none" value="" data-order="0">
+                            </div>
+                            <button type="button" class="btn btn-outline-success mx-2 my-2 _add_text">Add Text</button>
+                            <button type="button" class="btn btn-outline-warning mx-2 my-2 _add_image">Add Image</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default news_cancel" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary news_add" value="_add">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- Remove News Modal -->
+        <div class="modal fade bs-modal-sm" tabindex="-1" id="remove_modal" role="dialog" aria-hidden="true">
+            <form id="delete-form">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirm Delete</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+                                </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to remove this new?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary btnRemove" value="_remove">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <%- include('footer') %>
+
+            <!-- Bootstrap JS -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="/static/js/back_to_topJS.js"></script>
+            <script src="/static/js/navbarJS.js"></script>
+            <script src="/static/js/adm_newsJS.js"></script>
+            <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+            <script type="text/javascript">
+                bkLib.onDomLoaded(nicEditors.allTextAreas);
+            </script>
+
+            <script>
+                function show_item(item) {
+                    var news = `<div class="card m-2 shadow rounded" id="` + item._id + `">
+                                <div class="news_wrapper clearfix p-2">
+                                    <div class="row">
+                                        <div class="logo float-left news_image justify-content-center align-items-center d-flex col-md-4">
+                                            <img class="img-fluid img-thumbnail" src="` + item.thumbnail_path + `">
+                                        </div>
+                                        <div class="news_content col-md-8">
+                                            <div class="row">
+                                                <h3><a class="ml-3 text-truncate news_link" href="/news/` + item.query + `">` + item.title + `</a></h3>                                                
+                                                <a class="btn btn-outline-primary ml-auto mr-4" href="/adm-news/query=` + item.query + `">Manage </a>
+                                                <button class="btn btn-outline-danger ml-1 mr-4" data-toggle="modal" data-target="#remove_modal" data-id="` + item._id + `">Remove</button>
+                                            </div>
+                                            <hr class="my-2">
+                                            <span class="text-muted">Posted on ` + item.upload_date + `</span>                                            
+                                            <p class="lead text-truncate">
+                                                    ` + item.summary.replace(/\n/g, "<br />") + `
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                    $('.news_section').append(news).hide().fadeIn(500);
+                };
+
+                var news_lastest_id = Number.MAX_VALUE;
+
+                function get_and_show_item() {
+                    $.get("/get-news/f-id=" + news_lastest_id, function(data, status) {
+                        if (data.length != 0)
+                            data.forEach(element => {
+                                show_item(element);
+                                news_lastest_id = element._id;
+                            });
+
+                        if (data.length < 5) news_lastest_id = -1;
+                    });
+                }
+
+                $(document).ready(function() {
+                    $('.lds-roller').show();
+                    get_and_show_item();
+                    setTimeout(function() {
+                        $('.lds-roller').hide();
+                    }, 500)
+                })
+
+                $(window).on('scroll', function() {
+                    if (news_lastest_id != -1) {
+                        if ($('#waypoint').is(":visible")) {
+                            $('.lds-roller').show();
+                            get_and_show_item();
+                            setTimeout(function() {
+                                $('.lds-roller').hide()
+                            }, 1000);
+                        }
+                    }
+                })
+            </script>
+</body>
+
+</html>

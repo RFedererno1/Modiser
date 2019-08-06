@@ -8,8 +8,12 @@ var bodyParser = require('body-parser');
 var mime = require('mime');
 var fs = require('fs');
 var crypto = require('crypto');
+const argon2 = require('argon2');
+const session = require('express-session');
+const flash = require('flash');
+const MongoStore = require('connect-mongo')(session);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 var app = express();
 
@@ -26,12 +30,9 @@ app.use('/static', express.static(path.join(__dirname, 'public')));
 app.set("views", path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(express.json());
 
-const secret = 'abcdefg';
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Configure isProduction variable
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Database Connections //
 mongoose.Promise = global.Promise;
@@ -43,6 +44,24 @@ db.once("open", function(callback) {
     console.log("Connection succeeded.");
 });
 
+
+// Configure app
+app.use(express.json());
+app.use(session({
+    secret: 'chouchou-4',
+    cookie: { maxAge: 300000 },
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
+const secret = 'abcdefg';
+
+
 //Models from schemas
 
 var partner_db = mongoose.model('partner_db', schemas.partner_schema);
@@ -52,6 +71,8 @@ var category_db = mongoose.model('category_db', schemas.CategorySchema);
 var product_db = mongoose.model('product_db', schemas.ProductSchema);
 
 var news_db = mongoose.model('news_db', schemas.news_schema);
+
+var account_db = mongoose.model('account_db', schemas.account_schema);
 
 // Upload destinations //
 
@@ -106,7 +127,27 @@ var upload_news = multer({ storage: storage_news });
 //    POST SECTION    //
 ///////////////////////
 
-app.post("/adm-partners/add", upload_partner.single('image'), function(req, res) {
+app.post('/admin/login', function(req, res) {
+    account_db.findOne({ email: req.body.email }, async function(err, user) {
+        if (!user) {
+            req.flash('msg', 'User not found!');
+        } else {
+            try {
+                if (await argon2.verify(user.password, req.body.password)) {
+                    console.log(req.session)
+                    req.session.email = user.email;
+                } else {
+                    req.flash('msg', 'Incorrect Password!');
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        res.redirect('/admin');
+    });
+})
+
+app.post("/admin/adm-partners/add", upload_partner.single('image'), function(req, res) {
     var _partner = new partner_db(req.body);
     _partner.image_path = '/static/uploads/partners/' + req.file.filename;
 
@@ -115,10 +156,10 @@ app.post("/adm-partners/add", upload_partner.single('image'), function(req, res)
         if (err) throw err;
         console.log("New partner saved.");
     })
-    res.redirect('/adm-partners');
+    res.redirect('/admin/adm-partners');
 })
 
-app.post('/remove-partner/id=:id', function(req, res) {
+app.post('/admin/remove-partner/id=:id', function(req, res) {
 
     partner_db.find({ _id: req.params["id"] }, function(err, result) {
         if (err) throw err;
@@ -137,15 +178,15 @@ app.post('/remove-partner/id=:id', function(req, res) {
     })
 })
 
-app.post('/adjust-product/add-category', upload_category.single('imageCategory'), function(req, res) {
+app.post('/admin/adm-products/add-category', upload_category.single('imageCategory'), function(req, res) {
     var _category = new category_db(req.body);
     _category.imagePathCategory = '/static/uploads/categories/' + req.file.filename;
     console.log(_category);
     _category.save({})
-    res.redirect('/adjust-product');
+    res.redirect('/admin/adm-products');
 })
 
-app.post('/remove-category/id=:id', function(req, res) {
+app.post('/admin/remove-category/id=:id', function(req, res) {
 
     category_db.find({ _id: req.params["id"] }, function(err, result) {
         if (err) throw err;
@@ -177,7 +218,7 @@ app.post('/remove-category/id=:id', function(req, res) {
     })
 })
 
-app.post("/adjust-product/add-product", upload_product.single('ImageProduct'), function(req, res) {
+app.post("/admin/adm-products/add-product", upload_product.single('ImageProduct'), function(req, res) {
     var _product = new product_db(req.body);
     _product.ImagePathProduct = '/static/uploads/products/' + req.file.filename;
 
@@ -188,10 +229,10 @@ app.post("/adjust-product/add-product", upload_product.single('ImageProduct'), f
         })
         console.log("New product saved.");
     })
-    res.redirect('/adjust-product');
+    res.redirect('/admin/adm-products');
 })
 
-app.post('/remove-product/id=:id', function(req, res) {
+app.post('/admin/remove-product/id=:id', function(req, res) {
 
     product_db.find({ _id: req.params["id"] }, function(err, result) {
         if (err) throw err;
@@ -215,7 +256,7 @@ app.post('/remove-product/id=:id', function(req, res) {
     })
 })
 
-app.post('/adjust-product/modify-category-id=:id', upload_category.single('imageCategory'), function(req, res) {
+app.post('/admin/adm-products/modify-category-id=:id', upload_category.single('imageCategory'), function(req, res) {
     _category = new category_db(req.body);
 
     if (req.file != undefined) {
@@ -238,10 +279,10 @@ app.post('/adjust-product/modify-category-id=:id', upload_category.single('image
         if (err) throw err;
         console.log("Category id " + req.params["id"] + " successfully updated");
     })
-    res.redirect('/adjust-product');
+    res.redirect('/admin/adm-products');
 });
 
-app.post('/adjust-product/modify-product-id=:id', upload_product.single('ImageProduct'), function(req, res) {
+app.post('/admin/adm-products/modify-product-id=:id', upload_product.single('ImageProduct'), function(req, res) {
     _product = new product_db(req.body);
 
     if (req.file != undefined) {
@@ -264,10 +305,10 @@ app.post('/adjust-product/modify-product-id=:id', upload_product.single('ImagePr
         if (err) throw err;
         console.log("Product id " + req.params["id"] + " successfully updated.")
     })
-    res.redirect('/adjust-product');
+    res.redirect('/admin/adm-products');
 })
 
-app.post('/adm-news/add', upload_news.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'image', maxCount: 999 }]), function(req, res) {
+app.post('/admin/adm-news/add', upload_news.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'image', maxCount: 999 }]), function(req, res) {
     _news = new news_db(req.body);
 
     var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
@@ -288,11 +329,11 @@ app.post('/adm-news/add', upload_news.fields([{ name: 'thumbnail', maxCount: 1 }
         console.log("News saved.");
     });
     setTimeout(() => {
-        res.redirect('/adm-news');
+        res.redirect('/admin/adm-news');
     }, 1000);
 })
 
-app.post('/adm-news/remove-id=:id', function(req, res) {
+app.post('/admin/adm-news/remove-id=:id', function(req, res) {
 
     news_db.find({ _id: req.params["id"] }, function(err, result) {
 
@@ -313,7 +354,7 @@ app.post('/adm-news/remove-id=:id', function(req, res) {
     })
 });
 
-app.post("/adm-news/manage-news-id=:id", upload_news.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'image', maxCount: 999 }]), function(req, res) {
+app.post("/admin/adm-news/manage-news-id=:id", upload_news.fields([{ name: 'thumbnail', maxCount: 1 }, { name: 'image', maxCount: 999 }]), function(req, res) {
         _news = new news_db(req.body);
         var flow = req.body.flow;
         if (flow == undefined) flow = "a";
@@ -390,7 +431,7 @@ app.post("/adm-news/manage-news-id=:id", upload_news.fields([{ name: 'thumbnail'
             })
         });
 
-        res.redirect('/adm-news');
+        res.redirect('/admin/adm-news');
     })
     /////////////////////////
     //     GET SECTION    //
@@ -423,28 +464,51 @@ app.get('/news', function(req, res) {
 });
 
 app.get('/admin', function(req, res) {
-    res.render('admin_sign_in');
+    if (!req.session.email) {
+        var message;
+        if (res.locals.flash[0] != undefined)
+            message = res.locals.flash[0].message;
+
+        if (message != undefined)
+            res.render('admin_sign_in', { message: message });
+        else
+            res.render('admin_sign_in', { message: undefined });
+    } else {
+        res.render('admin_management', { message: undefined });
+    }
 });
 
-app.get('/adm-partners', function(req, res) {
-    partner_db.find({}, function(err, result) {
-        if (err) throw err;
-        res.render('adm_partners', { partners: result });
-    })
-});
-
-app.get('/adjust-product', function(req, res) {
-    category_db.find({}, function(err0, result0) {
-        if (err0) throw err0;
-        product_db.find({}, function(err1, result1) {
-            if (err1) throw err1;
-            res.render('product_A&R', { category: result0, product: result1 });
+app.get('/admin/adm-partners', function(req, res) {
+    if (req.session.email) {
+        partner_db.find({}, function(err, result) {
+            if (err) throw err;
+            res.render('adm_partners', { partners: result });
         })
-    })
+    } else {
+        res.redirect('/err=access-denied');
+    }
 });
 
-app.get('/adm-news', function(req, res) {
-    res.render('adm_news');
+app.get('/admin/adm-products', function(req, res) {
+    if (req.session.email) {
+        category_db.find({}, function(err0, result0) {
+            if (err0) throw err0;
+            product_db.find({}, function(err1, result1) {
+                if (err1) throw err1;
+                res.render('product_A&R', { category: result0, product: result1 });
+            })
+        })
+    } else {
+        res.redirect('/err=access-denied');
+    }
+});
+
+app.get('/admin/adm-news', function(req, res) {
+    if (req.session.email) {
+        res.render('adm_news');
+    } else {
+        res.redirect('/err=access-denied');
+    }
 })
 
 
@@ -466,15 +530,20 @@ app.get('/news/:query', function(req, res) {
     })
 })
 
-app.get('/adm-news/query=:query', function(req, res) {
-    news_db.find({ query: req.params["query"] }, function(err, docs) {
-        if (err) throw err;
-        if (docs.length != 0) {
-            res.render('manage_news', { detail: docs });
-        } else {
-            res.redirect('/err=unknown-site');
-        }
-    })
+app.get('/admin/adm-news/query=:query', function(req, res) {
+    if (req.session.email) {
+        news_db.find({ query: req.params["query"] }, function(err, docs) {
+            if (err) throw err;
+            if (docs.length != 0) {
+                res.render('manage_news', { detail: docs });
+            } else {
+                res.redirect('/err=unknown-site');
+            }
+        })
+    } else {
+        res.redirect('/err=access-denied');
+    }
+
 })
 
 app.get('/product-list=:id', function(req, res) {

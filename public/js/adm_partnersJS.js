@@ -10,36 +10,8 @@ $('.btnRemove').on('click', function(e) {
     var db_id = $('#delete-form').data('id').split("_")[1];
     $('#' + id).remove();
     $('.bs-example-modal-sm').modal('hide');
-    fetch('/remove-partner/id=' + db_id, { method: 'POST' });
+    fetch('/admin/remove-partner/id=' + db_id, { method: 'POST' });
 });
-
-// $(document).on('click', '.btn-success', function() {
-//     var select_id = "#" + $(this).data("edit");
-//     var partner_type = $(this).data("edit").split("_")[0];
-
-//     // To uppercase first letter in partner type
-//     partner_type = partner_type.charAt(0).toUpperCase() + partner_type.slice(1);
-
-//     // data-id for getting partner id. Used in fetching to server to handle request
-//     $("#edit-form").data("id", $(this).data("edit"));
-
-//     // Fetching partner's name into edit form.
-//     $("#edit-form").find("#name")[0].value = $(select_id).find(".card-header")[0].innerText;
-
-//     // Span image to the edit form. $(select_id).find(".card-img-top")[0].attributes.src.value
-//     var current_image = '<img id="img_current_image" class="img-fluid img-thumbnail" src=' + $(select_id).find(".card-img-top")[0].attributes.src.value + ' alt="Card image cap">';
-//     $("#current_image").append(current_image);
-
-//     // Choosing the type of partner and set 'selected' to the corresponding option
-//     for (var i = 0; i < $("#edit-form").find("#type").children().length; i++) {
-//         if ($("#edit-form").find("#type").children()[i].innerText == partner_type) {
-//             $("#edit-form").find("#type").children()[i].selected = true;
-//         }
-//     }
-
-//     // Fetch function goes here
-
-// });
 
 
 // scrollspy section

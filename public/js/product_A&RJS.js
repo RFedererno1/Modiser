@@ -11,11 +11,11 @@ $('.btnRemove').on('click', function(e) {
     if (db_kind == "Category") {
         $('#' + id).remove();
         $('#Delete').modal('hide');
-        fetch('/remove-category/id=' + db_id, { method: 'POST' });
+        fetch('/admin/remove-category/id=' + db_id, { method: 'POST' });
     } else if (db_kind == "Prod") {
         $('#' + id).remove();
         $('#Delete').modal('hide');
-        fetch('/remove-product/id=' + db_id, { method: 'POST' });
+        fetch('/admin/remove-product/id=' + db_id, { method: 'POST' });
     }
 });
 
@@ -32,7 +32,7 @@ $(document).on('click', '.category_mod', function() {
     $('#modifyCategoryForm').find("input")[0].value = $("#Category_" + $(this).data('id')).find('span')[0].innerText;
     $('#modifyCategoryForm').find('img')[0].attributes.src.value = data;
     // Set POST query
-    $('#modifyCategoryForm').attr('action', '/adjust-product/modify-category-id=' + $(this).data('id'));
+    $('#modifyCategoryForm').attr('action', '/admin/adm-products/modify-category-id=' + $(this).data('id'));
 });
 
 $(document).on('click', '.product_mod', function() {
@@ -50,7 +50,7 @@ $(document).on('click', '.product_mod', function() {
     $('#modifyProductForm').find('img')[0].attributes.src.value = data.find('img')[0].attributes.src.value;
 
     // Set POST query
-    $('#modifyProductForm').attr('action', '/adjust-product/modify-product-id=' + $(this).data('id'));
+    $('#modifyProductForm').attr('action', '/admin/adm-products/modify-product-id=' + $(this).data('id'));
 
 })
 $(document).on('click', '.categoryImageView', function() {

@@ -21,7 +21,9 @@
     <title>
         <% if (message == "unknown-site"){ %>
             Modiser: Unknown Site
-            <%  } %>
+            <%  } else if (message == "access-denied"){ %>
+                Modiser: Access Denied
+                <% } %>
     </title>
 </head>
 
@@ -41,7 +43,9 @@
                         <p>
                             <% if (message == "unknown-site"){ %>
                                 The page you are attempting to access does not exist or has been moved.
-                                <%  } %>
+                                <%  } else if (message == "access-denied"){ %>
+                                    Access denied.
+                                    <% } %>
                         </p>
                         <p>
                             Try going back to our homepage by clicking the button below.

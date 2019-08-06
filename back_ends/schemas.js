@@ -37,6 +37,14 @@ var news_schema = new mongoose.Schema({
     query: String
 })
 
+var account_schema = new mongoose.Schema({
+    email: {
+        type: String,
+        unique: true
+    },
+    password: String
+})
+
 
 partner_schema.plugin(autoIncrement.plugin, 'partner');
 
@@ -53,3 +61,5 @@ module.exports.CategorySchema = CategorySchema;
 module.exports.ProductSchema = ProductSchema;
 
 module.exports.news_schema = news_schema;
+
+module.exports.account_schema = account_schema;

@@ -438,7 +438,10 @@ app.post("/admin/adm-news/manage-news-id=:id", upload_news.fields([{ name: 'thum
     ///////////////////////
 
 app.get('/', function(req, res) {
-    res.render('front_page');
+    partner_db.find({}, function(err, docs) {
+        if (err) throw err;
+        res.render('front_page', { partners: docs });
+    })
 });
 
 

@@ -87,3 +87,9 @@
     -webkit-transition-delay: .2s;
     transition-delay: .2s;
 }
+
+p>a,
+p>a:hover {
+    color: black;
+    text-decoration: none;
+}

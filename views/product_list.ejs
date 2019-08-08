@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <b>Name:</b>
-                                        <span id="description"><%= products[i].NameProduct %></span>
+                                        <span id="description" style="color: #2E5894;"><b><%= products[i].NameProduct %></b></span>
                                         <br>
                                         <b>Origin:</b>
                                         <span id="description"><%= products[i].OriginProduct %></span>
@@ -55,7 +55,9 @@
                                         <span id="description"><%= products[i].BarcodeProduct %></span>
                                         <br>
                                         <b>Description:</b>
-                                        <span id="description"><%= products[i].DescriptionProduct %></span>
+                                        <span id="description" style="white-space: pre-line">
+                                            <%= products[i].DescriptionProduct %>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

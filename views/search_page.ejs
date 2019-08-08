@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- CSSs -->
+    <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/search_pageCSS.css" type="text/css">
+
+    <title>Products</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <a id='button'></a>
+        <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0;">
+            <div class="container">
+                <hr>
+                <p style="font-weight: 500; font-size: 1.25em;">
+                    <a href="/">Modiser</a> >
+                    <a href="/search-page">Search</a>
+                </p>
+                <hr>
+                <% if (category.length<=0 && notproduct.length <=0 && partner.length <=0 && news.length <= 0) { %>
+                    <h3>We can't find that, sorry :((</h1>
+                        <% } %>
+                            <% if (category.length>0 || notproduct.length >0) { %>
+                                <h3 style="color: Blue; text-align: center; font-size: 40px;"><b>Products</b></h3>
+                                <% } %>
+                                    <% for (var i=0; i < category.length; i++){ %>
+                                        <div>
+                                            <span>
+                                        <b style="font-size: 30px;"><%= category[i].NameCategory %></b>
+                                    </span>
+                                            <hr style="width: 100%;">
+                                        </div>
+                                        <div class="row">
+                                            <% for (var j=0; j < products.length; j++){ %>
+                                                <% if ( category[i]._id == products[j].CategoryIdProduct) { %>
+                                                    <div class="col-6 col-md-6 my-3">
+                                                        <div class="row">
+                                                            <div class="col-md-4">
+                                                                <img class="img-fluid img-thumbnail" alt="currentImage" src="<%= products[j].ImagePathProduct %>">
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <b><span style="font-size:20px;" id="description"><%= products[j].NameProduct %></span></b>
+                                                                <br>
+                                                                <br>
+                                                                <b>Origin:</b>
+                                                                <span id="origin"><%= products[j].OriginProduct %></span>
+                                                                <br>
+                                                                <b>Barcode:</b>
+                                                                <span id="barcode"><%= products[j].BarcodeProduct %></span>
+                                                                <br>
+                                                                <b>Description:</b>
+                                                                <span id="description"><%= products[j].DescriptionProduct %></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <% } %>
+                                                        <% } %>
+                                        </div>
+                                        <% } %>
+                                            <% var notCategoryDis=[]; %>
+                                                <% j = 0; %>
+                                                    <% for (var i=0; i < notproduct.length; i++){ %>
+                                                        <% if ((notCategoryDis.indexOf(notproduct[i].CategoryIdProduct) == -1)) { %>
+                                                            <% notCategoryDis[j]= notproduct[i].CategoryIdProduct; %>
+                                                                <% j++; %>
+                                                                    <% } %>
+                                                                        <% } %>
+                                                                            <% var notCategoryPos=[]; %>
+                                                                                <% j=0; %>
+                                                                                    <% for (var i=0;i < notCategory.length; i++) { %>
+                                                                                        <% if (notCategoryDis.indexOf(notCategory[i]._id)>=0) { %>
+                                                                                            <% notCategoryPos[j]=i; %>
+                                                                                                <% j++; %>
+                                                                                                    <% } %>
+                                                                                                        <% } %>
+                                                                                                            <% for (var i=0; i < notCategoryPos.length; i++){ %>
+                                                                                                                <div>
+                                                                                                                    <span>
+                                                                            <b style="font-size: 30px;"><%= notCategory[notCategoryPos[i]].NameCategory %></b>
+                                                                        </span>
+                                                                                                                    <hr style="width: 100%;">
+                                                                                                                </div>
+                                                                                                                <div class="row">
+                                                                                                                    <% for (var j=0; j < notproduct.length; j++){ %>
+                                                                                                                        <% if ( notCategoryDis[i] == notproduct[j].CategoryIdProduct) { %>
+                                                                                                                            <div class="col-6 col-md-6 my-3">
+                                                                                                                                <div class="row">
+                                                                                                                                    <div class="col-md-4">
+                                                                                                                                        <img class="img-fluid img-thumbnail" alt="currentImage" src="<%= notproduct[j].ImagePathProduct %>">
+                                                                                                                                    </div>
+                                                                                                                                    <div class="col-md-8">
+                                                                                                                                        <b><span style="font-size:20px;" id="description"><%= notproduct[j].NameProduct %></span></b>
+                                                                                                                                        <br>
+                                                                                                                                        <br>
+                                                                                                                                        <b>Origin:</b>
+                                                                                                                                        <span id="origin"><%= notproduct[j].OriginProduct %></span>
+                                                                                                                                        <br>
+                                                                                                                                        <b>Barcode:</b>
+                                                                                                                                        <span id="barcode"><%= notproduct[j].BarcodeProduct %></span>
+                                                                                                                                        <br>
+                                                                                                                                        <b>Description:</b>
+                                                                                                                                        <span id="description"><%= notproduct[j].DescriptionProduct %></span>
+                                                                                                                                    </div>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                            <% } %>
+                                                                                                                                <% } %>
+                                                                                                                </div>
+                                                                                                                <% } %>
+                                                                                                                    <% if (partner.length>0) { %>
+                                                                                                                        <hr>
+                                                                                                                        <h3 style="color: Blue; text-align: center; font-size: 40px;"><b>Partners</b></h3>
+                                                                                                                        <% } %>
+                                                                                                                            <% var partnerTypeArray = []; %>
+                                                                                                                                <% var j = 0; %>
+                                                                                                                                    <% for (var i=0; i < partner.length; i++) { %>
+                                                                                                                                        <% if (partnerTypeArray.indexOf(partner[i].type) < 0) { %>
+                                                                                                                                            <% partnerTypeArray[j] = partner[i].type; %>
+                                                                                                                                                <% j++; %>
+                                                                                                                                                    <% } %>
+                                                                                                                                                        <% } %>
+                                                                                                                                                            <% for (var i=0; i < partnerTypeArray.length; i++) {%>
+                                                                                                                                                                <div>
+                                                                                                                                                                    <span>
+                                                                                                                                                            <b style="font-size: 30px;"><%= partnerTypeArray[i] %></b>
+                                                                                                                                                        </span>
+                                                                                                                                                                    <hr style="width: 100%;">
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="row">
+                                                                                                                                                                    <% for (var j=0; j < partner.length; j++) {%>
+                                                                                                                                                                        <% if (partner[j].type==partnerTypeArray[i]) {%>
+                                                                                                                                                                            <div class="col-md-3">
+                                                                                                                                                                                <div class="card mr-2 my-2">
+                                                                                                                                                                                    <img class="card-img-top img-fluid" src="<%= partner[j].image_path %>" alt="Card image cap">
+                                                                                                                                                                                    <hr class="my-0">
+                                                                                                                                                                                    <h5 class="card-header border-black" style="text-align: center; background-color:#6D9BC3;color:white;">
+                                                                                                                                                                                        <b><%= partner[j].name %></b>
+                                                                                                                                                                                    </h5>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <% } %>
+                                                                                                                                                                                <% } %>
+                                                                                                                                                                </div>
+                                                                                                                                                                <% } %>
+                                                                                                                                                                    <% if (news.length>0) { %>
+                                                                                                                                                                        <hr>
+                                                                                                                                                                        <h3 style="color: Blue; text-align: center; font-size: 40px;"><b>News</b></h3>
+                                                                                                                                                                        <hr>
+                                                                                                                                                                        <% } %>
+                                                                                                                                                                            <div class="row">
+                                                                                                                                                                                <% for (var i=0; i < news.length; i++) { %>
+                                                                                                                                                                                    <% var newsQuery='/news/' + news[i].query; %>
+                                                                                                                                                                                        <div class="col-md-6">
+                                                                                                                                                                                            <div class="row">
+                                                                                                                                                                                                <div class="col-md-4">
+                                                                                                                                                                                                    <a href="<%= newsQuery %>">              
+                                                                                                                                                                                            <img class="img-fluid img-thumbnail center" src="<%= news[i].thumbnail_path %>">
+                                                                                                                                                                                        </a>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                                <div class="col-md-8">
+                                                                                                                                                                                                    <h5>
+                                                                                                                                                                                                        <a href="<%= newsQuery %>">
+                                                                                                                                                                                                            <%= news[i].title %>
+                                                                                                                                                                                                        </a>
+                                                                                                                                                                                                    </h5>
+                                                                                                                                                                                                    <br>
+                                                                                                                                                                                                    <p>
+                                                                                                                                                                                                        <%= news[i].summary %>
+                                                                                                                                                                                                    </p>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <% } %>
+                                                                                                                                                                            </div>
+
+            </div>
+        </div>
+        <%- include('footer') %>
+            <!-- Bootstrap JS -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="/static/js/back_to_topJS.js"></script>
+            <script src="/static/js/navbarJS.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,14 @@
 body {
     font-family: "Josefin Sans", sans-serif;
+    background-image: linear-gradient(to right, #1E3D58, blue, #1E3D58, blue, #1E3D58);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.jumbotron-fluid {
+    margin: auto 5%;
+    border: 5px double;
 }
 
 .list-group-item,
@@ -30,8 +39,9 @@ section {
     margin-bottom: 0px !important;
 }
 
-hr {
-    margin: auto;
+hr.inner {
+    background-color: #fff;
+    margin: auto 10%;
 }
 
 .list-group {
@@ -75,14 +85,6 @@ hr {
 .col-md-4 {
     padding: 25px;
 }
-
-
-/* 
-h5>a,
-a {
-    text-decoration: none;
-    color: black;
-} */
 
 .btn-readmore {
     border: none;

@@ -1,10 +1,16 @@
 body {
     font-family: "Josefin Sans", sans-serif;
     font-size: 18px;
+    background-image: linear-gradient(to right, #1E3D58, blue, #1E3D58, blue, #1E3D58);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .jumbotron-fluid {
     margin-bottom: 0;
+    margin: auto 5%;
+    border: 5px double;
 }
 
 .center {

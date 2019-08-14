@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5d3f0dad3ffd121dd039d82e"},"count":{"$numberInt":"35"},"model":"partner","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d410b3e3fd03751809afa31"},"count":{"$numberInt":"8"},"model":"category","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d410b3f3fd03751809afa32"},"count":{"$numberInt":"26"},"model":"product","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d464572e2700a0f14ee0876"},"count":{"$numberInt":"7"},"model":"news","field":"_id","__v":{"$numberInt":"0"}}

@@ -7,3 +7,10 @@
 {"_id":{"$numberInt":"14"},"type":"Brand","name":"BiC","image_path":"/static/uploads/partners/image-1564412236644.jpeg","__v":{"$numberInt":"0"}}
 {"_id":{"$numberInt":"15"},"type":"Brand","name":"Pagoda Foods","image_path":"/static/uploads/partners/image-1564412249592.png","__v":{"$numberInt":"0"}}
 {"_id":{"$numberInt":"16"},"type":"Brand","name":"Eikodo","image_path":"/static/uploads/partners/image-1564412262550.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"27"},"type":"Market","name":"Bibo Mart","image_path":"/static/uploads/partners/image-1565744167303.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"28"},"type":"Market","name":"7 Eleven Mart","image_path":"/static/uploads/partners/image-1565744186299.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"29"},"type":"Market","name":"Satra Mart","image_path":"/static/uploads/partners/image-1565744209076.jpeg","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"32"},"type":"Market","name":"Zakka Mart","image_path":"/static/uploads/partners/image-1565744509801.jpeg","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"33"},"type":"Market","name":"Tiki","image_path":"/static/uploads/partners/image-1565744521220.png","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"34"},"type":"Market","name":"FamilyMart","image_path":"/static/uploads/partners/image-1565744538844.jpeg","__v":{"$numberInt":"0"}}
+{"_id":{"$numberInt":"35"},"type":"Market","name":"B's Mart","image_path":"/static/uploads/partners/image-1565744698975.jpeg","__v":{"$numberInt":"0"}}

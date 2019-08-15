@@ -4,18 +4,10 @@
     "description": "",
     "main": "app.js",
     "scripts": {
-        "start": "nodemon app.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": ""
+        "start": "node app.js"
     },
     "author": "modiser",
     "license": "ISC",
-    "bugs": {
-        "url": ""
-    },
-    "homepage": "",
     "dependencies": {
         "argon2": "^0.24.0",
         "body-parser": "^1.19.0",

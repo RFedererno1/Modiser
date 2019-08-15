@@ -36,7 +36,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 // Database Connections //
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/database', { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://cutiakg123:02032014n@database-pd4ta.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));

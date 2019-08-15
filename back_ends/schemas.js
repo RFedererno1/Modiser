@@ -37,6 +37,14 @@ var news_schema = new mongoose.Schema({
     query: String
 })
 
+var about_us_schema = new mongoose.Schema({
+    introductionText: String,
+    introductionImagePath: String,
+    founderName: String,
+    founderText: String,
+    founderImagePath: String
+});
+
 var account_schema = new mongoose.Schema({
     email: {
         type: String,
@@ -63,3 +71,5 @@ module.exports.ProductSchema = ProductSchema;
 module.exports.news_schema = news_schema;
 
 module.exports.account_schema = account_schema;
+
+module.exports.about_us_schema = about_us_schema;

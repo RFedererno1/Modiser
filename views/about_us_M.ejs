@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- CSSs -->
+
+    <link rel="stylesheet" href="/static/css/navbarCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/back_to_topCSS.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/footerCSS.css" type="text/css">
+
+    <title>AboutUsM</title>
+</head>
+
+<body>
+    <%- include('navbar') %>
+        <hr>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h3 align="center" style="color: brown">About Us Management</h3>
+                <form id="manageAboutUs" method="POST" enctype="multipart/form-data" action="/admin/adm-about-us/modify">
+                    <p><b>Introduction Text:</b></p>
+                    <textarea class="form-control" rows="3" style="width: 100%;" style="width:100%" type="text" name="introductionText"><%= docs[0].introductionText %></textarea><br>
+                    <p><b>Introduction Image:</b></p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Current Introduction Image:</p>
+                            <img class="img-fluid img-thumbnail" alt="currentImage" src="<%= docs[0].introductionImagePath %>">
+                        </div>
+                        <div class="col-md-6">
+                            <p>New Introduction Image:</p>
+                            <input class="file-form-control" type="file" name="introductionImage" accept="image/*">
+                        </div>
+                    </div><br>
+                    <p><b>Founder Name:</b></p>
+                    <input class="form-control" style="width:75%" type="text" name="founderName" value="<%= docs[0].founderName %>"><br>
+                    <p><b>Founder Text:</b></p>
+                    <textarea class="form-control" rows="3" style="width: 100%;" style="width:100%" type="text" name="founderText"><%= docs[0].founderText %></textarea><br>
+                    <p><b>Founder Image:</b></p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>Current Founder Image:</p>
+                            <img class="img-fluid img-thumbnail" alt="currentImage" src="<%= docs[0].founderImagePath %>">
+                        </div>
+                        <div class="col-md-6">
+                            <p>New Founder Image:</p>
+                            <input class="file-form-control" type="file" name="founderImage" accept="image/*">
+                        </div>
+                    </div><br>
+                    <button class="btn btn-primary" type="submit" aria-expanded="false" aria-controls="collapseExample" style="width: 5em;" align="right">
+                        Submit
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <br>
+        <%- include('footer') %>
+
+            <!-- Bootstrap JS -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <script src="/static/js/back_to_topJS.js"></script>
+            <script src="/static/js/navbarJS.js"></script>
+</body>
+
+</html>

@@ -74,6 +74,8 @@ var news_db = mongoose.model('news_db', schemas.news_schema);
 
 var account_db = mongoose.model('account_db', schemas.account_schema);
 
+var about_us_db = mongoose.model('about_us_db', schemas.about_us_schema);
+
 // Upload destinations //
 
 var partner_upload_path = path.join(__dirname, 'public/uploads/partners');
@@ -123,9 +125,21 @@ var storage_news = multer.diskStorage({
 })
 
 var upload_news = multer({ storage: storage_news });
-/////////////////////////
-//    POST SECTION    //
-///////////////////////
+
+var about_us_upload_path = path.join(__dirname, 'public/uploads/aboutUs');
+var storage_about_us = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, about_us_upload_path)
+    },
+    filename: function(req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + '.' + mime.getExtension(file.mimetype))
+    }
+})
+
+var upload_about_us = multer({ storage: storage_about_us })
+    /////////////////////////
+    //    POST SECTION    //
+    ///////////////////////
 
 app.post('/admin/login', function(req, res) {
     account_db.findOne({ email: req.body.email }, async function(err, user) {
@@ -433,48 +447,72 @@ app.post("/admin/adm-news/manage-news-id=:id", upload_news.fields([{ name: 'thum
 
     res.redirect('/admin/adm-news');
 })
+
 app.post('/search-page', function(req, res) {
-        var thingsToFind = req.body.f.split(" ");
-        thingsToFindMerge = thingsToFind.join("|");
-        category_db.find({ NameCategory: { $regex: thingsToFindMerge, $options: 'i' } }, 'NameCategory ProductCountCategory _id', function(err, categories) {
-            if (err) throw err;
-            var productId = [];
-            k = 0;
-            for (var i = 0; i < categories.length; i++) {
-                for (j = 0; j < categories[i].ProductCountCategory.length; j++) {
-                    productId[k] = categories[i].ProductCountCategory[j];
-                    k++;
-                }
+    var thingsToFind = req.body.f.split(" ");
+    thingsToFindMerge = thingsToFind.join("|");
+    category_db.find({ NameCategory: { $regex: thingsToFindMerge, $options: 'i' } }, 'NameCategory ProductCountCategory _id', function(err, categories) {
+        if (err) throw err;
+        var productId = [];
+        k = 0;
+        for (var i = 0; i < categories.length; i++) {
+            for (j = 0; j < categories[i].ProductCountCategory.length; j++) {
+                productId[k] = categories[i].ProductCountCategory[j];
+                k++;
             }
-            product_db.find({ '_id': { $in: productId } }, function(err1, product) {
-                if (err1) throw err1;
-                category_db.count({}, function(err, count) {
-                    if (err) throw err;
-                    if (count > categories.length) {
-                        category_db.find({ NameCategory: { $not: { $regex: thingsToFindMerge, $options: 'i' } } }, 'NameCategory ProductCountCategory _id', function(err, notCategory) {
+        }
+        product_db.find({ '_id': { $in: productId } }, function(err1, product) {
+            if (err1) throw err1;
+            category_db.count({}, function(err, count) {
+                if (err) throw err;
+                if (count > categories.length) {
+                    category_db.find({ NameCategory: { $not: { $regex: thingsToFindMerge, $options: 'i' } } }, 'NameCategory ProductCountCategory _id', function(err, notCategory) {
+                        if (err) throw err;
+                        var notProductId = []
+                        for (var i = 0; i < notCategory.length; i++) {
+                            if (i == 0) {
+                                notProductId = notProductId + notCategory[i].ProductCountCategory;
+                            } else notProductId = notProductId + ',' + notCategory[i].ProductCountCategory;
+                        }
+                        var productToFind = notProductId.split(",");
+                        product_db.find({ _id: productToFind, $or: [{ NameProduct: { $regex: thingsToFindMerge, $options: 'i' } }, { OriginProduct: { $regex: thingsToFindMerge, $options: 'i' } }, { BarcodeProduct: { $regex: thingsToFindMerge, $options: 'i' } }, { DescriptionProduct: { $regex: thingsToFindMerge, $options: 'i' } }] }, 'NameProduct OriginProduct BarcodeProduct DescriptionProduct ImagePathProduct CategoryIdProduct', function(err, notproduct) {
                             if (err) throw err;
-                            var notProductId = []
-                            for (var i = 0; i < notCategory.length; i++) {
-                                if (i == 0) {
-                                    notProductId = notProductId + notCategory[i].ProductCountCategory;
-                                } else notProductId = notProductId + ',' + notCategory[i].ProductCountCategory;
-                            }
-                            var productToFind = notProductId.split(",");
-                            product_db.find({ _id: productToFind, $or: [{ NameProduct: { $regex: thingsToFindMerge, $options: 'i' } }, { OriginProduct: { $regex: thingsToFindMerge, $options: 'i' } }, { BarcodeProduct: { $regex: thingsToFindMerge, $options: 'i' } }, { DescriptionProduct: { $regex: thingsToFindMerge, $options: 'i' } }] }, 'NameProduct OriginProduct BarcodeProduct DescriptionProduct ImagePathProduct CategoryIdProduct', function(err, notproduct) {
+                            partner_db.find({ $or: [{ type: { $regex: thingsToFindMerge, $options: 'i' } }, { name: { $regex: thingsToFindMerge, $options: 'i' } }] }, '_id type name image_path', function(err, partner) {
                                 if (err) throw err;
-                                partner_db.find({ $or: [{ type: { $regex: thingsToFindMerge, $options: 'i' } }, { name: { $regex: thingsToFindMerge, $options: 'i' } }] }, '_id type name image_path', function(err, partner) {
+                                news_db.find({ $or: [{ title: { $regex: thingsToFindMerge, $options: 'i' } }, { summary: { $regex: thingsToFindMerge, $options: 'i' } }, { news_text: { $regex: thingsToFindMerge, $options: 'i' } }] }, 'title upload_date thumbnail_path summary order news_text news_image_path query', function(err, news) {
                                     if (err) throw err;
-                                    news_db.find({ $or: [{ title: { $regex: thingsToFindMerge, $options: 'i' } }, { summary: { $regex: thingsToFindMerge, $options: 'i' } }, { news_text: { $regex: thingsToFindMerge, $options: 'i' } }] }, 'title upload_date thumbnail_path summary order news_text news_image_path query', function(err, news) {
-                                        if (err) throw err;
-                                        res.render('search_page', { category: categories, products: product, notCategory: notCategory, notproduct: notproduct, partner: partner, news: news });
-                                    });
+                                    res.render('search_page', { category: categories, products: product, notCategory: notCategory, notproduct: notproduct, partner: partner, news: news });
                                 });
                             });
                         });
-                    }
-                })
-            });
+                    });
+                }
+            })
         });
+    });
+})
+
+app.post("/admin/adm-about-us/modify", upload_about_us.fields([{ name: 'introductionImage', maxCount: 1 }, { name: 'founderImage', maxCount: 1 }]), function(req, res) {
+        _aboutUs = new about_us_db(req.body);
+        let temp_aboutUs = _aboutUs.toObject();
+        delete temp_aboutUs._id;
+        var remove_file_dest = [];
+        about_us_db.find({}, function(err, docs) {
+            if (err) throw err;
+            if (req.files["introductionImage"] != undefined) {
+                remove_file_dest.push(about_us_upload_path + '/' + docs[0].introductionImagePath.split("/")[4]);
+                temp_aboutUs.introductionImagePath = '/static/uploads/aboutUs/' + req.files["introductionImage"][0].filename;
+            }
+            if (req.files["founderImage"] != undefined) {
+                remove_file_dest.push(about_us_upload_path + '/' + docs[0].founderImagePath.split("/")[4]);
+                temp_aboutUs.founderImagePath = '/static/uploads/aboutUs/' + req.files["founderImage"][0].filename;
+            }
+            about_us_db.update({ _id: docs[0]._id }, temp_aboutUs, function(err) {
+                if (err) throw err;
+            })
+            remove_files(remove_file_dest, console.log);
+        });
+        res.redirect('/admin/adm-about-us');
     })
     /////////////////////////
     //     GET SECTION    //
@@ -489,7 +527,10 @@ app.get('/', function(req, res) {
 
 
 app.get('/about-us', function(req, res) {
-    res.render('about_us');
+    about_us_db.find({}, function(err, result) {
+        if (err) throw err;
+        res.render('about_us', { aboutUs: result });
+    })
 });
 
 app.get('/products', function(req, res) {
@@ -609,6 +650,18 @@ app.get('/product-list=:id', function(req, res) {
 app.get('/search-page', function(req, res) {
     res.render('search_page');
 })
+
+app.get('/admin/adm-about-us', function(req, res) {
+    if (req.session.email) {
+        about_us_db.find({}, function(err, docs) {
+            if (err) throw err;
+            console.log(docs);
+            res.render('about_us_M', { docs: docs });
+        })
+    } else {
+        res.redirect('/err=access-denied');
+    }
+});
 
 ////////////////////
 // Handle Errors //

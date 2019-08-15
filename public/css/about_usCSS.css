@@ -68,6 +68,15 @@ p>a:hover {
         line-height: 1.5em;
         font-size: 30px;
     }
+    .FounderName {
+        text-align: center;
+    }
+    .FounderImg {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
 }
 
 @media (min-width: 768px) {

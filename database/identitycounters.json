@@ -1,4 +1,4 @@
-{"_id":{"$oid":"5d3f0dad3ffd121dd039d82e"},"count":{"$numberInt":"35"},"model":"partner","field":"_id","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d410b3e3fd03751809afa31"},"count":{"$numberInt":"8"},"model":"category","field":"_id","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d410b3f3fd03751809afa32"},"count":{"$numberInt":"34"},"model":"product","field":"_id","__v":{"$numberInt":"0"}}
-{"_id":{"$oid":"5d464572e2700a0f14ee0876"},"count":{"$numberInt":"11"},"model":"news","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d459e549b2e531394f09f1f"},"count":{"$numberInt":"9"},"model":"category","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d459e549b2e531394f09f20"},"count":{"$numberInt":"-1"},"model":"partner","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d459e559b2e531394f09f21"},"count":{"$numberInt":"35"},"model":"product","field":"_id","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d4b8f25c22c4e10343a1608"},"count":{"$numberInt":"2"},"model":"news","field":"_id","__v":{"$numberInt":"0"}}

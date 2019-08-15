@@ -113,6 +113,9 @@ button>a:hover {
     .carousel-inner-2>.carousel-item>img {
         height: 300px;
     }
+    .IntroSum {
+        text-align: center;
+    }
 }
 
 @media (min-width: 768px) {
